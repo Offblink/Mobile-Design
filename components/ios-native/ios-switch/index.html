@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iOS 开关 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">ios-native</span><span class="tag alt">apple-design · mobile-ui-craft</span></div>
+    <h1>iOS 开关（ios-switch）</h1>
+    <p>iOS 系统开关：51×31 轨（关灰 / 开系统绿）+ 27px 白 knob 带阴影，knob 位移走 spring、轨色变化走阻尼。demo 是三行设置上下文，点击开关切换。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="ios-scroll">
+
+        <div class="ios-sethead">阅读设置</div>
+        <div class="ios-setsub">提醒与无障碍</div>
+
+        <!-- 设置行：内联最小 markup，不依赖 inset-grouped-list 组件 -->
+        <div class="ios-setgroup">
+          <div class="ios-setrow"><span class="ios-setname">睡前提醒</span><span class="ios-switch ios-on"><i></i></span></div>
+          <div class="ios-setrow"><span class="ios-setname">无障碍字体</span><span class="ios-switch"><i></i></span></div>
+          <div class="ios-setrow"><span class="ios-setname">自动下载新书</span><span class="ios-switch"><i></i></span></div>
+        </div>
+
+        <p class="ios-sethint">点开关切换：knob 走 --ios-spring 轻回弹位移 20px，轨色走 --ios-damped 阻尼过渡。</p>
+
+      </div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>51×31 轨</b>：关 <code>#E9E9EA</code> / 开 <code>--ios-green</code>（系统绿，平台正确），颜色过渡 <code>--ios-damped</code>。</li>
+        <li><b>27px 白 knob</b>：带阴影，开态位移 20px，位移过渡 <code>--ios-spring</code> 轻回弹——位移回弹、颜色不回弹。</li>
+        <li><b>状态一眼可读</b>：只有位置 + 底色，不加文字、不加勾选图标、不加描边。</li>
+        <li>demo 里三行设置是<b>内联最小 markup</b>，不 link 任何其它组件的 CSS。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>点开关：knob 回弹位移与轨色变绿同时发生，两条曲线各走各的。</li>
+        <li>连续开→关→开：transition 始终追最终状态，不会半途卡住。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>无 stock 蓝、无描边、无发光——开态只有系统绿。</li>
+        <li>无 backdrop-filter、无毛玻璃。</li>
+        <li>行本身不可点：交互只挂在开关上（与源 demo 一致）。</li>
+      </ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* ============================================================
+   mobile-design · demo page chrome
+   每个组件 demo 页共用的舞台：深色底 + 手机外壳 + 说明栏
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  min-height:100vh;background:#0c0c10;color:#e8e8ee;
+  font-family:-apple-system,"SF Pro Text","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  padding:36px 36px 60px;
+  display:flex;flex-direction:column;align-items:center;gap:22px;
+}
+
+/* 页头 */
+.demo-head{width:100%;max-width:1240px;display:flex;flex-direction:column;gap:10px}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-size:12px;padding:4px 10px;border-radius:999px;background:#1b1b24;border:1px solid #2c2c3a;color:#a9a4ff}
+.tag.alt{border-color:#5a4a1a;color:#e8c56a}
+.demo-head h1{font-size:19px;font-weight:700;letter-spacing:.3px}
+.demo-head p{font-size:13px;color:#8f8f9e;max-width:900px;line-height:1.7}
+
+/* 舞台：手机 + 说明并排 */
+.stage{display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap;justify-content:center;width:100%;max-width:1240px}
+
+/* 手机外壳（背景色由各组件 demo 覆盖） */
+.phone{
+  width:390px;height:844px;border-radius:47px;background:#F2F2F7;position:relative;overflow:hidden;flex:none;
+  box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 10px #17171d,0 0 0 11px #34343e;
+}
+.screen{position:absolute;inset:0}
+.scroll{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+
+/* 说明栏 */
+.notes{max-width:380px;font-size:13px;line-height:1.75;color:#b9b9c6;padding-top:6px}
+.notes h2{font-size:15px;color:#fff;margin:16px 0 6px}
+.notes h2:first-child{margin-top:0}
+.notes ul{padding-left:18px}
+.notes li{margin-bottom:4px}
+.notes b{color:#e8e8ee}
+.notes .never{color:#ff9b8a}
+.notes code, .notes kbd{
+  background:#1b1b24;border:1px solid #2c2c3a;border-radius:4px;padding:1px 5px;
+  font-size:11.5px;font-family:Consolas,monospace;
+}
+.notes a{color:#8fd0ff}
+
+/* 返回总览 */
+.home{font-size:12.5px;color:#7d7d8f;text-decoration:none}
+.home:hover{color:#c9c9d6}
+
+/* 控制条（demo 里的开关演示用） */
+.controls{display:flex;gap:10px;flex-wrap:wrap}
+.ctl{
+  display:flex;align-items:center;gap:9px;font-size:12.5px;color:#cfcfda;
+  background:#15151d;border:1px solid #262633;border-radius:999px;padding:7px 14px;cursor:pointer;
+  user-select:none;transition:border-color .2s;
+}
+.ctl:hover{border-color:#3a3a4d}
+.ctl .dot{width:14px;height:14px;border-radius:999px;background:#2c2c3a;transition:background .2s,box-shadow .2s}
+.ctl.on .dot{background:#43cbff;box-shadow:0 0 8px rgba(67,203,255,.6)}
+.ctl.danger.on .dot{background:#ff6b57;box-shadow:0 0 8px rgba(255,107,87,.6)}

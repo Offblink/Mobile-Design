@@ -1,0 +1,49 @@
+/* ============================================================
+   large-title-header · iOS 大标题顶栏（HIG Large Title）
+   出处：apple-design（HIG 结构）+ mobile-ui-craft（iOS 段 · 非玻璃）
+   ============================================================ */
+
+/* iOS: demo 舞台暖纸底 */
+.phone{background:var(--ios-bg)}
+
+.screen{display:flex;flex-direction:column}
+
+/* iOS: 状态栏实心暖底 —— 非毛玻璃，0 backdrop-filter */
+.ios-status{
+  height:52px;background:var(--ios-bg);display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 26px 6px;font-size:14px;font-weight:600;color:var(--ios-ink);position:relative;z-index:20;
+}
+.ios-status-right{display:flex;gap:6px;align-items:center}
+
+/* HIG: 导航行 44pt 实心 + 底部 .5px 发丝线，居中 17/600 标题 */
+.ios-nav{
+  height:44px;background:var(--ios-bg);display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;position:relative;z-index:20;
+}
+.ios-nav::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.5px;background:var(--ios-sep)}
+.ios-nav-title{font-size:17px;font-weight:600;color:var(--ios-ink)}
+/* HIG: 两侧动作 min-width 64px（≥44pt 触控），17pt 单一强调色 */
+.ios-side{min-width:64px;font-size:17px;color:var(--ios-accent);display:flex;align-items:center;gap:3px}
+.ios-side-r{justify-content:flex-end}
+.ios-side svg{width:12px;height:20px}
+
+/* HIG: Large Title 34/41 700 + 15pt 次级副标题（--ios-ink2） */
+.ios-scroll{flex:1;overflow-y:auto;padding:18px 16px 28px;scrollbar-width:none}
+.ios-scroll::-webkit-scrollbar{display:none}
+.ios-largetitle{font-size:34px;line-height:41px;font-weight:700;color:var(--ios-ink);letter-spacing:.2px}
+.ios-largesub{font-size:15px;color:var(--ios-ink2);margin:2px 0 16px}
+
+/* 占位内容：给顶栏一段真实滚动语境（编辑感衬线 Hero，非本组件规则） */
+.ios-ph{
+  background:linear-gradient(150deg,#2E2A22,#4A3B27 55%,#7A4B2A);border-radius:20px;padding:22px 20px 20px;
+  color:#F6EFE3;margin-bottom:14px;
+}
+.ios-ph-kick{font-size:11px;letter-spacing:2.4px;color:rgba(246,239,227,.62);font-weight:600}
+.ios-ph h2{
+  font-family:Georgia,"Times New Roman","Songti SC",serif;font-size:24px;line-height:1.32;
+  font-weight:600;margin:8px 0 12px;letter-spacing:.4px;
+}
+.ios-ph-meta{font-size:12px;color:rgba(246,239,227,.72)}
+.ios-ph-item{padding:13px 2px;border-bottom:.5px solid var(--ios-sep)}
+.ios-ph-item-t{font-size:16px;color:var(--ios-ink)}
+.ios-ph-item-m{font-size:13px;color:var(--ios-ink2);margin-top:3px}

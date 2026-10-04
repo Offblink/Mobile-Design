@@ -1,0 +1,45 @@
+/* ============================================================
+   inset-grouped-list · iOS 内嵌分组列表
+   出处：apple-design（HIG 结构）+ mobile-ui-craft（iOS 段 · 非玻璃）
+   ============================================================ */
+
+/* iOS: demo 舞台暖纸底 */
+.phone{background:var(--ios-bg)}
+
+.screen{display:flex;flex-direction:column}
+.ios-scroll{flex:1;overflow-y:auto;padding:56px 16px 28px;scrollbar-width:none}
+.ios-scroll::-webkit-scrollbar{display:none}
+
+/* HIG: 13pt 分组小标题（--ios-ink2，非 ALL-CAPS），白卡圆角 16 + 微投影 */
+.ios-grouplabel{font-size:13px;color:var(--ios-ink2);margin:20px 4px 7px;letter-spacing:.3px}
+.ios-grouplabel:first-child{margin-top:0}
+.ios-group{background:var(--ios-card);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(33,28,20,.05)}
+
+/* HIG: 行 ≥52pt，按压底色反馈（颜色过渡走 --ios-damped 阻尼） */
+.ios-row{
+  display:flex;align-items:center;gap:13px;padding:12px 16px;min-height:52px;position:relative;cursor:pointer;
+  transition:background var(--ios-damped);
+}
+.ios-row:active{background:rgba(33,28,20,.05)}
+/* iOS: 分隔线从左起 57px 内嵌（让开 30px 图标 + 13px 间隙 + 16px 行内距），绝不通栏 */
+.ios-row+.ios-row::before{content:"";position:absolute;top:0;left:57px;right:0;height:.5px;background:var(--ios-sep)}
+
+/* iOS: 30px 圆角 8 彩色图标方块 */
+.ios-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;flex:none}
+.ios-ic svg{width:17px;height:17px}
+.ios-row-name{flex:1;font-size:17px;color:var(--ios-ink)}
+.ios-row-val{font-size:16px;color:var(--ios-ink2)}
+.ios-chev{width:8px;height:14px;color:rgba(33,28,20,.3);flex:none}
+
+/* 行内开关占位：本组件自带的内联最小 markup（不 link ios-switch 组件），
+   轨色 --ios-damped、knob 位移 --ios-spring，与系统开关同规格 51×31 */
+.ios-sw{
+  width:51px;height:31px;border-radius:999px;background:#E9E9EA;position:relative;flex:none;cursor:pointer;
+  transition:background .3s var(--ios-damped);
+}
+.ios-sw i{
+  position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:999px;background:#fff;
+  box-shadow:0 3px 8px rgba(0,0,0,.15);transition:transform .35s var(--ios-spring);
+}
+.ios-sw.ios-on{background:var(--ios-green)}
+.ios-sw.ios-on i{transform:translateX(20px)}

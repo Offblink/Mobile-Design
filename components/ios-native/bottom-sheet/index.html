@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>底部面板 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">ios-native</span><span class="tag alt">apple-design · mobile-ui-craft</span></div>
+    <h1>底部面板（bottom-sheet）</h1>
+    <p>iOS 底部面板：点实心胶囊按钮，纯色遮罩（不模糊）淡入、白色面板从底部 spring 弹起；grabber + 标题/副标题 + 3 行 srow + tinted「打开章节」。点遮罩或按钮关闭。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+
+      <div class="ios-sheet-body">
+        <div class="ios-sheet-lead">今日阅读</div>
+        <div class="ios-sheet-leadv">周三 · 已连续阅读 21 天</div>
+        <p class="ios-sheet-hint">点下方按钮弹起底部面板；点遮罩任意处或「打开章节」关闭。</p>
+        <button class="ios-sheet-open" id="iosOpenSheet">继续阅读</button>
+      </div>
+
+      <!-- 遮罩：rgba(20,16,10,.32) 纯色压暗，绝不模糊 —— 0 个 backdrop-filter -->
+      <div class="ios-veil" id="iosVeil"></div>
+
+      <!-- 面板：白底 14px 14px 0 0，translateY 从底部 spring 弹起 -->
+      <div class="ios-sheet" id="iosSheet">
+        <div class="ios-grabber"></div>
+        <div class="ios-sheet-title">继续阅读</div>
+        <div class="ios-sheet-sub">第 12 章 · 在纸页与像素之间</div>
+        <div class="ios-srow"><span>翻到</span><span class="ios-srow-val">第 148 页</span></div>
+        <div class="ios-srow"><span>朗读</span><span class="ios-srow-val">关闭</span></div>
+        <!-- 行内开关占位：本组件自带的内联最小 markup，不 link ios-switch 组件 -->
+        <div class="ios-srow ios-srow-last"><span>加入今晚读完</span><span class="ios-sw"><i></i></span></div>
+        <button class="ios-sheet-done" id="iosCloseSheet">打开章节</button>
+      </div>
+
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>触发按钮</b>：实心胶囊 <code>--ios-accent</code>，50px 高 ≥44pt，按压 scale 回弹。</li>
+        <li><b>纯色遮罩</b>：<code>rgba(20,16,10,.32)</code> 只压暗、不模糊——整段 <b>0 个 backdrop-filter</b>。</li>
+        <li><b>spring 弹起</b>：白面板 <code>14px 14px 0 0</code> 圆角，<code>translateY(110%) → 0</code> 走 <code>--ios-spring</code>；遮罩淡入走 <code>--ios-damped</code>。</li>
+        <li><b>结构</b>：36×5 grabber + 20/700 标题 + 13pt 副标题 + 3 行 srow（.5px 发丝线分隔）+ tinted「打开章节」。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>点「继续阅读」：面板从底部弹起、遮罩同步淡入。</li>
+        <li>点遮罩任意处 / 「打开章节」：两者都能关闭。</li>
+        <li>面板内点「加入今晚读完」的开关占位（内联最小 markup）。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>遮罩不模糊——不是毛玻璃 sheet，纯色压暗就够。</li>
+        <li>面板不带玻璃质感、不做拖拽手势（demo 只留点按关闭）。</li>
+        <li>无 stock 蓝：主按钮赤陶实心、次按钮赤陶 tinted。</li>
+      </ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

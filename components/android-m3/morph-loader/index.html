@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>形状形变装载器 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">android-m3</span><span class="tag alt">skill: material-3 · mobile-ui-craft</span></div>
+    <h1>形状形变装载器（morph-loader）</h1>
+    <p>M3 LoadingIndicator：一枚渐变 blob 用 2.4s 的 border-radius 形变叠加 3.6s 自转，替代转圈的圆形 spinner。demo 配一行同步文案，并排展示大、小两档尺寸。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="md3-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+      <div class="md3-scroll">
+        <h2 class="md3-h2">正在加载</h2>
+
+        <!-- loader 行：blob + 双行文案 -->
+        <div class="md3-loaderrow">
+          <div class="md3-blob"></div>
+          <div class="md3-loadertext">
+            <div class="md3-t1">正在同步训练数据…</div>
+            <div class="md3-t2">LoadingIndicator · 多边形形变替代圆形 spinner</div>
+          </div>
+        </div>
+
+        <!-- 大小两档并排 -->
+        <div class="md3-sizepair">
+          <div class="md3-sizecell">
+            <div class="md3-blob md3-blob-lg"></div>
+            <div class="md3-sizecap">大 · 56px<br>Hero 区块占位</div>
+          </div>
+          <div class="md3-sizecell">
+            <div class="md3-blob md3-blob-sm"></div>
+            <div class="md3-sizecap">小 · 20px<br>行内 / 按钮态</div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>两条 keyframes 叠加</b>：<code>morph</code> 2.4s ease-in-out 改 border-radius 四角百分比；<code>spin</code> 3.6s linear 转 360°——形变不同步于自转，读起来是「活的」。</li>
+        <li><b>渐变填充</b>：primary→tertiary 对角渐变，形变时色随形走。</li>
+        <li><b>尺寸档位</b>：同一段动画适配 56 / 34 / 20px 三档，blob 用 flex:none 不被挤压。</li>
+        <li>配套 loader 行文案：主句 600 字重 + 副句说明组件身份。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>盯住四角：border-radius 在两组八值之间来回插值，圆与尖角持续轮换。</li>
+        <li>对比两档：动画时长不随尺寸改变，节奏一致。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>不做圆形 spinner、不做匀速旋转的 SVG 进度环、不给形变加固定时长 tween。</li></ul>
+    </aside>
+  </div>
+</body>
+</html>

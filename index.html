@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mobile-design · 移动端设计组件库</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+body{min-height:100vh;background:#0c0c10;color:#e8e8ee;
+  font-family:-apple-system,"SF Pro Text","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  padding:56px 32px 80px;display:flex;flex-direction:column;align-items:center;gap:34px}
+header{max-width:1080px;width:100%}
+h1{font-size:30px;font-weight:800;letter-spacing:-.4px}
+h1 span{background:linear-gradient(90deg,#a9a4ff,#9ff0d8,#e8c56a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:14.5px;color:#9a9aa8;margin-top:10px;line-height:1.8}
+.sub code{background:#1b1b24;border:1px solid #2c2c3a;border-radius:5px;padding:1px 7px;font-size:13px;font-family:Consolas,monospace}
+.group{max-width:1080px;width:100%}
+.group h2{font-size:16px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.group h2 .sw{width:14px;height:14px;border-radius:5px}
+.group .desc{font-size:12.5px;color:#8f8f9e;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+a.card{display:block;background:#15151d;border:1px solid #262633;border-radius:14px;padding:15px 16px;
+  text-decoration:none;color:#e8e8ee;transition:transform .25s cubic-bezier(.34,1.56,.64,1),border-color .2s,background .2s}
+a.card:hover{transform:translateY(-3px);border-color:#3a3a4d;background:#191922}
+a.card .n{font-size:14.5px;font-weight:700}
+a.card .id{font-size:11px;color:#7d7d8f;font-family:Consolas,monospace;margin-top:3px}
+a.card .d{font-size:12.5px;color:#a9a9b8;margin-top:8px;line-height:1.6}
+footer{max-width:1080px;width:100%;font-size:12px;color:#6a6a7a;line-height:1.9;border-top:1px solid #1e1e29;padding-top:18px}
+footer a{color:#8fd0ff;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span>mobile-design</span></h1>
+  <p class="sub">
+    移动端设计组件库 —— <b>Material 3 Expressive（Android）</b> · <b>iOS 原生 UI</b> · <b>iOS 26 Liquid Glass</b> 三套设计语言。
+    纯 HTML/CSS/JS，零构建零依赖，双击任意 <code>index.html</code> 即可打开（<code>file://</code> 直接可用，无需服务器）。
+  </p>
+</header>
+
+<div class="group">
+  <h2><span class="sw" style="background:#6750A4"></span>Android · Material 3 Expressive</h2>
+  <div class="desc">弹簧动效（spatial 回弹 / effects 临界阻尼）· 形状多样 · 强调字重 · 组件替换 · 胶囊导航</div>
+  <div class="grid">
+    <a class="card" href="components/android-m3/spring-switch/index.html"><div class="n">弹簧开关</div><div class="id">spring-switch</div><div class="d">knob 走弹簧、轨道色不回弹的双轨动效开关</div></a>
+    <a class="card" href="components/android-m3/button-group/index.html"><div class="n">连接式分段按钮</div><div class="id">button-group</div><div class="d">ButtonGroup，替代过时的 SegmentedButton</div></a>
+    <a class="card" href="components/android-m3/fab-menu/index.html"><div class="n">FAB 菜单</div><div class="id">fab-menu</div><div class="d">圆角方块 FAB 展开为弹簧菜单，替代堆叠小 FAB</div></a>
+    <a class="card" href="components/android-m3/morph-loader/index.html"><div class="n">形变装载器</div><div class="id">morph-loader</div><div class="d">多边形形状形变，替代圆形转圈 spinner</div></a>
+    <a class="card" href="components/android-m3/nav-pill-bar/index.html"><div class="n">胶囊导航条</div><div class="id">nav-pill-bar</div><div class="d">底部导航 + 弹射平移的胶囊指示器</div></a>
+    <a class="card" href="components/android-m3/expressive-card/index.html"><div class="n">表现力卡片</div><div class="id">expressive-card</div><div class="d">Hero moment：形变 + 色移 + 强调字重同帧联动</div></a>
+  </div>
+</div>
+
+<div class="group">
+  <h2><span class="sw" style="background:#B4552D"></span>iOS · 原生 UI（无玻璃）</h2>
+  <div class="desc">HIG 骨架 · 实心栏 + 发丝线 · 单一强调色 · 大标题 · 全程 0 个 backdrop-filter</div>
+  <div class="grid">
+    <a class="card" href="components/ios-native/large-title-header/index.html"><div class="n">大标题顶栏</div><div class="id">large-title-header</div><div class="d">状态栏 + 导航行 + 34pt 大标题三件套</div></a>
+    <a class="card" href="components/ios-native/segmented-control/index.html"><div class="n">分段控件</div><div class="id">segmented-control</div><div class="d">白色 thumb 弹性滑动的 iOS Segmented</div></a>
+    <a class="card" href="components/ios-native/ios-switch/index.html"><div class="n">iOS 开关</div><div class="id">ios-switch</div><div class="d">51×31 系统绿开关，knob 轻回弹</div></a>
+    <a class="card" href="components/ios-native/inset-grouped-list/index.html"><div class="n">分组列表</div><div class="id">inset-grouped-list</div><div class="d">圆角卡 + 图标方块 + 57px 内嵌分隔线</div></a>
+    <a class="card" href="components/ios-native/tab-bar-solid/index.html"><div class="n">实心 Tab 栏</div><div class="id">tab-bar-solid</div><div class="d">非玻璃时代的 iOS 底栏正确画法</div></a>
+    <a class="card" href="components/ios-native/bottom-sheet/index.html"><div class="n">底部面板</div><div class="id">bottom-sheet</div><div class="d">从触发处弹起的实心面板 + 纯色遮罩</div></a>
+  </div>
+</div>
+
+<div class="group">
+  <h2><span class="sw" style="background:#43CBFF"></span>iOS 26 · Liquid Glass</h2>
+  <div class="desc">两层纪律（玻璃只在控件层）· Regular/Clear 变体 · 35% 压暗 · scroll-edge · Reduce Transparency 回退</div>
+  <div class="grid">
+    <a class="card" href="components/liquid-glass/glass-toolbar/index.html"><div class="n">玻璃工具条</div><div class="id">glass-toolbar</div><div class="d">浮动玻璃顶栏 + 唯一着色按钮，含无障碍/反例开关</div></a>
+    <a class="card" href="components/liquid-glass/glass-tab-bar/index.html"><div class="n">玻璃 Tab 条</div><div class="id">glass-tab-bar</div><div class="d">滚动最小化/展开的底部玻璃导航</div></a>
+    <a class="card" href="components/liquid-glass/glass-fab/index.html"><div class="n">玻璃 FAB</div><div class="id">glass-fab</div><div class="d">浮在内容上的玻璃圆形操作钮</div></a>
+    <a class="card" href="components/liquid-glass/clear-variant-bar/index.html"><div class="n">Clear 变体条</div><div class="id">clear-variant-bar</div><div class="d">压在照片上的 Clear 玻璃 + 35% 压暗层</div></a>
+    <a class="card" href="components/liquid-glass/scroll-edge/index.html"><div class="n">滚动边缘效果</div><div class="id">scroll-edge</div><div class="d">内容撞向玻璃条时的渐隐带（scroll-edge effect）</div></a>
+  </div>
+</div>
+
+<footer>
+  设计规则出自三个开源 skill：<a href="https://github.com/hamen/material-3-skill">hamen/material-3-skill</a>（MIT）、
+  <a href="https://github.com/dickwu/apple-design-skill">dickwu/apple-design-skill</a>、
+  <a href="https://github.com/ivan-magda/mobile-design-skills">ivan-magda/mobile-design-skills</a>（MIT）——
+  本仓库的 HTML/CSS/JS 为原创实现。许可：MIT。
+</footer>
+
+</body>
+</html>

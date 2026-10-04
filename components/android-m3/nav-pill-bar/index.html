@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>胶囊指示器导航条 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">android-m3</span><span class="tag alt">skill: material-3 · mobile-ui-craft</span></div>
+    <h1>胶囊指示器导航条（nav-pill-bar）</h1>
+    <p>底部导航：surface-container 底、26px 圆角、absolute bottom，4 个 SVG 项共享一枚 secondary-container 胶囊指示器——点击时 translateX 用 --spring 弹射平移，active 图标用 on-surface、标签用 secondary 角色。demo 上方放几张可滚动的内容卡。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="md3-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+      <div class="md3-scroll">
+        <div class="md3-appbar">
+          <div class="md3-avatar"></div>
+          <div class="md3-hi"><div class="md3-l1">周三 · 训练日</div><div class="md3-l2">下午好，周予</div></div>
+          <div class="md3-iconbtn">🔔</div>
+        </div>
+
+        <div class="md3-contentcard"><span class="md3-cc-n">今日步数</span><span class="md3-cc-v">12,480</span></div>
+        <div class="md3-contentcard md3-contentcard-alt"><span class="md3-cc-n">连续打卡</span><span class="md3-cc-v">21 天</span></div>
+        <div class="md3-contentcard"><span class="md3-cc-n">静息心率</span><span class="md3-cc-v">58 bpm</span></div>
+        <div class="md3-contentcard"><span class="md3-cc-n">睡眠时长</span><span class="md3-cc-v">7h 24m</span></div>
+        <div class="md3-contentcard md3-contentcard-alt"><span class="md3-cc-n">本周训练</span><span class="md3-cc-v">4 次</span></div>
+      </div>
+
+      <!-- 导航栏：胶囊指示器 + active 标签 secondary 色 -->
+      <nav class="md3-navbar" id="nav">
+        <div class="md3-pill" id="pill"></div>
+        <div class="md3-navitem on">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          <span class="md3-lab">首页</span>
+        </div>
+        <div class="md3-navitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 12h18"/></svg>
+          <span class="md3-lab">训练</span>
+        </div>
+        <div class="md3-navitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span class="md3-lab">数据</span>
+        </div>
+        <div class="md3-navitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+          <span class="md3-lab">我的</span>
+        </div>
+      </nav>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>容器</b>：<code>--m3-sc</code> 底、圆角 26px、<code>left/right 12px + absolute bottom</code>，浮在滚动内容之上（z-index 层级 + 柔和阴影）。</li>
+        <li><b>胶囊指示器</b>：72×32 的 secondary-container 绝对定位层，点击时 JS 算出目标项中心再 <code>translateX</code>，过渡曲线 <code>--spring</code>——弹射平移带过冲。</li>
+        <li><b>active 双角色</b>：图标随 <code>color</code> 变 on-surface（damped），<b>标签</b>单独染成 <code>--m3-secondary</code>——Expressive 的「图标与标签不同色」规则。</li>
+        <li>非 active 项图标/标签为 on-surface-variant，滚动内容可一直延伸到导航条底下。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>点四个 tab：胶囊<b>弹射</b>到目标项（注意过冲回位），标签与图标分色切换。</li>
+        <li>先滚动内容卡再点导航，看导航条悬浮不随内容动。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>不做 BottomAppBar、不用指示器淡入淡出代替平移、active 标签不用 on-surface 一色到底。</li></ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

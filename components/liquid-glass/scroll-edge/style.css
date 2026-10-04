@@ -1,0 +1,61 @@
+/* ============================================================
+   滚动边缘效果 scroll-edge —— Liquid Glass 组
+   出处：mobile-ui-craft（Glass 实现配方）+ apple-design · scroll-edge effect
+   两层纪律：玻璃只在控件层（工具条），渐隐带属于内容层的缓冲垫
+   ============================================================ */
+
+/* Glass 组舞台底色（按平台覆盖 frame.css 手机壳底色） */
+.phone{background:#F2F2F7}
+
+.scroll{padding-bottom:40px}
+
+/* ---------- scroll-edge 渐隐带（内容层缓冲垫，非玻璃） ---------- */
+/* 顶部 118px：白 → 透明；初始 opacity 由 JS 给 0.95（页面加载即执行一次） */
+.lg-edge{
+  position:absolute;top:0;left:0;right:0;height:118px;z-index:35;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--glass-fallback-bg) 95%,transparent) 0%,
+    color-mix(in srgb,var(--glass-fallback-bg) 65%,transparent) 45%,
+    transparent 100%);
+}
+
+/* ---------- demo 上下文：内联一条玻璃工具条 ---------- */
+.lg-edgebar{
+  position:absolute;top:54px;left:16px;right:16px;height:52px;border-radius:26px;z-index:40;
+  display:flex;align-items:center;justify-content:center;color:var(--ios-ink);
+  font-size:15px;font-weight:600;
+}
+
+/* ---------- 内容层（永远不透明） ---------- */
+/* 彩色渐变「照片」：撞向玻璃条时由渐隐带接手过渡 */
+.lg-photo{
+  height:300px;position:relative;
+  background:
+    radial-gradient(120% 90% at 15% 10%,#FFD3A5 0%,transparent 55%),
+    radial-gradient(130% 100% at 90% 30%,#FF7E5F 0%,transparent 60%),
+    linear-gradient(160deg,#7B4FA8 0%,#3B2E6E 55%,#171435 100%);
+}
+/* 第二张彩色照片（teal）：滚动中段也有彩色内容可看 */
+.lg-photo--sea{
+  background:
+    radial-gradient(110% 80% at 80% 0%,#FFEB9A 0%,transparent 50%),
+    radial-gradient(140% 110% at 10% 90%,#43CBFF 0%,transparent 55%),
+    linear-gradient(150deg,#0F7C8A 0%,#134B6E 60%,#0A2340 100%);
+}
+.lg-photo .lg-cap{position:absolute;left:20px;bottom:18px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.lg-photo .lg-cap .lg-kicker{font-size:11px;letter-spacing:2.2px;opacity:.85}
+.lg-photo .lg-cap .lg-heading{font-family:Georgia,serif;font-size:24px;font-weight:600;margin-top:4px}
+
+.lg-body{padding:20px 16px 0}
+.lg-sect{font-size:20px;font-weight:700;color:var(--ios-ink);margin:6px 4px 12px}
+
+/* 内容卡：永远不透明（两层纪律的下半层） */
+.lg-card{
+  background:var(--ios-card);border-radius:18px;padding:16px;margin-bottom:14px;color:var(--ios-ink);
+  box-shadow:0 1px 4px rgba(20,20,40,.06);
+}
+.lg-card .lg-kicker{font-size:12px;color:var(--ios-ink2);letter-spacing:.4px}
+.lg-card .lg-value{font-size:30px;font-weight:800;letter-spacing:-.6px;margin:4px 0 2px}
+.lg-card p{font-size:14px;color:var(--ios-ink2);line-height:1.6}
+.lg-chips{display:flex;gap:8px;margin-top:12px}
+.lg-chips span{font-size:12.5px;background:#F2F2F7;border-radius:999px;padding:7px 13px;color:#3a3a40}

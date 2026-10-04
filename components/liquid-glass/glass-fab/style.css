@@ -1,0 +1,57 @@
+/* ============================================================
+   玻璃 FAB glass-fab —— Liquid Glass 组
+   出处：mobile-ui-craft（Glass 实现配方）+ apple-design · liquid-glass.md
+   两层纪律：玻璃只在控件层，内容层永远不透明
+   ============================================================ */
+
+/* Glass 组舞台底色（按平台覆盖 frame.css 手机壳底色） */
+.phone{background:#F2F2F7}
+
+/* 底部留给浮动 FAB 的滚动余量 */
+.scroll{padding-bottom:110px}
+
+/* ---------- 彩色衬底（静态，供玻璃读数） ---------- */
+/* 玻璃只有压在彩色内容上才看得出来 —— 这层就是对照物 */
+.lg-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(110% 80% at 80% 0%,#FFEB9A 0%,transparent 50%),
+    radial-gradient(140% 110% at 10% 90%,#43CBFF 0%,transparent 55%),
+    linear-gradient(150deg,#0F7C8A 0%,#134B6E 60%,#0A2340 100%);
+}
+
+/* ---------- 内容层（永远不透明） ---------- */
+/* 状态栏（demo 上下文）：白字压在彩色衬底顶部 */
+.lg-status{
+  position:absolute;top:0;left:0;right:0;height:46px;z-index:16;pointer-events:none;
+  display:flex;justify-content:space-between;align-items:center;padding:0 28px 4px;
+  font-size:14px;font-weight:600;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35);
+}
+
+.lg-intro{padding:64px 20px 6px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.3)}
+.lg-intro .lg-kicker{font-size:11px;letter-spacing:2.2px;opacity:.85}
+.lg-intro .lg-h1{font-size:30px;font-weight:800;letter-spacing:-.4px;margin-top:4px}
+.lg-intro p{font-size:14px;line-height:1.6;opacity:.92;margin-top:6px}
+
+.lg-body{padding:18px 16px 0}
+/* 内容卡：永远不透明（两层纪律的下半层）——白卡压在彩色衬底上 */
+.lg-card{
+  background:var(--ios-card);border-radius:18px;padding:16px;margin-bottom:14px;color:var(--ios-ink);
+  box-shadow:0 1px 4px rgba(20,20,40,.06);
+}
+.lg-card .lg-kicker{font-size:12px;color:var(--ios-ink2);letter-spacing:.4px}
+.lg-card .lg-value{font-size:30px;font-weight:800;letter-spacing:-.6px;margin:4px 0 2px}
+.lg-card p{font-size:14px;color:var(--ios-ink2);line-height:1.6}
+.lg-chips{display:flex;gap:8px;margin-top:12px}
+.lg-chips span{font-size:12.5px;background:#F2F2F7;border-radius:999px;padding:7px 13px;color:#3a3a40}
+
+/* ---------- 控件层（唯一的玻璃区） ---------- */
+/* 玻璃 FAB：56px 圆，压在彩色衬底与卡片之上 */
+.lg-fab{
+  position:absolute;right:18px;bottom:36px;width:56px;height:56px;border-radius:999px;z-index:40;
+  display:grid;place-items:center;cursor:pointer;color:var(--ios-ink);
+  /* 位置/形状反馈走 spring：按下去回弹一次，不来回震荡 */
+  transition:transform .4s var(--spring);
+}
+.lg-fab:active{transform:scale(.9)}
+.lg-fab svg{width:24px;height:24px}

@@ -1,0 +1,39 @@
+/* ============================================================
+   morph-loader · M3 形状形变装载器
+   出处：material-3（token）+ mobile-ui-craft（生成工艺）
+   ============================================================ */
+
+/* M3 demo 舞台：手机底色用 surface 角色 */
+.phone{background:var(--m3-surface)}
+
+/* 页面骨架 */
+.md3-status{position:absolute;top:0;left:0;right:0;height:34px;display:flex;justify-content:space-between;align-items:center;
+  padding:0 20px;font-size:12px;font-weight:700;color:var(--m3-on-surface);z-index:30;pointer-events:none}
+.md3-scroll{position:absolute;inset:0;overflow-y:auto;padding:44px 16px 32px;scrollbar-width:none}
+.md3-scroll::-webkit-scrollbar{display:none}
+.md3-h2{font-size:22px;font-weight:700;color:var(--m3-on-surface);margin-bottom:14px;letter-spacing:-.3px}
+
+/* loader 行：blob + 双行文案 */
+.md3-loaderrow{display:flex;align-items:center;gap:14px;background:var(--m3-sc-low);border-radius:20px;
+  padding:14px 18px;margin-bottom:16px}
+.md3-t1{font-size:14px;font-weight:600;color:var(--m3-on-surface)}
+.md3-t2{font-size:12px;color:var(--m3-on-surface-variant);margin-top:2px}
+
+/* M3: 多边形形变（morph）+ 自转（spin）两条不同周期的 keyframes 叠加，替代圆形 spinner */
+.md3-blob{width:34px;height:34px;flex:none;
+  background:linear-gradient(135deg,var(--m3-primary),var(--m3-tertiary));
+  animation:morph 2.4s ease-in-out infinite,spin 3.6s linear infinite}
+@keyframes morph{
+  0%  {border-radius:42% 58% 70% 30% / 45% 45% 55% 55%}
+  50% {border-radius:70% 30% 46% 54% / 30% 60% 40% 70%}
+  100%{border-radius:42% 58% 70% 30% / 45% 45% 55% 55%}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 大小两档并排：同一段动画适配不同尺寸 */
+.md3-sizepair{display:flex;gap:12px}
+.md3-sizecell{flex:1;background:var(--m3-sc-low);border-radius:20px;padding:20px 16px;
+  display:flex;flex-direction:column;align-items:center;gap:14px}
+.md3-blob-lg{width:56px;height:56px}
+.md3-blob-sm{width:20px;height:20px}
+.md3-sizecap{font-size:11.5px;line-height:1.6;color:var(--m3-on-surface-variant);text-align:center}

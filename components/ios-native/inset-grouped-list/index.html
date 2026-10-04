@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>内嵌分组列表 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">ios-native</span><span class="tag alt">apple-design · mobile-ui-craft</span></div>
+    <h1>内嵌分组列表（inset-grouped-list）</h1>
+    <p>iOS inset grouped 列表：13pt 分组小标题 + 白卡圆角 16 微投影，行内 30px 彩色图标方块 + 17px 行名 + 值 + chevron，分隔线从左起 57px 内嵌。demo 两组各 3 行，按压有底色反馈。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="ios-scroll">
+
+        <div class="ios-grouplabel">本周进度</div>
+        <div class="ios-group">
+          <div class="ios-row">
+            <span class="ios-ic" style="background:#B4552D"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+            <span class="ios-row-name">阅读时长</span><span class="ios-row-val">4 小时 42 分</span>
+            <svg class="ios-chev" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l6 6-6 6"/></svg>
+          </div>
+          <div class="ios-row">
+            <span class="ios-ic" style="background:#5B7B4F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 012-2h12v18H6a2 2 0 01-2-2z"/><path d="M8 7h6"/></svg></span>
+            <span class="ios-row-name">读完书籍</span><span class="ios-row-val">3 本</span>
+            <svg class="ios-chev" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l6 6-6 6"/></svg>
+          </div>
+          <div class="ios-row">
+            <span class="ios-ic" style="background:#8A6FB0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 5.5L20 9.5l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-1z"/></svg></span>
+            <span class="ios-row-name">收藏章节</span><span class="ios-row-val">17</span>
+            <svg class="ios-chev" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l6 6-6 6"/></svg>
+          </div>
+        </div>
+
+        <div class="ios-grouplabel">偏好</div>
+        <div class="ios-group">
+          <!-- 行内开关占位：本组件自带的内联最小 markup，不 link ios-switch 组件 -->
+          <div class="ios-row">
+            <span class="ios-ic" style="background:#B4552D"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span>
+            <span class="ios-row-name">睡前提醒</span>
+            <span class="ios-sw ios-on"><i></i></span>
+          </div>
+          <div class="ios-row">
+            <span class="ios-ic" style="background:#3E7A9E"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h13"/></svg></span>
+            <span class="ios-row-name">无障碍字体</span><span class="ios-row-val">标准</span>
+            <svg class="ios-chev" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l6 6-6 6"/></svg>
+          </div>
+          <div class="ios-row">
+            <span class="ios-ic" style="background:#9A7B3C"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 12h6"/></svg></span>
+            <span class="ios-row-name">翻页方式</span><span class="ios-row-val">仿真</span>
+            <svg class="ios-chev" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l6 6-6 6"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>inset grouped</b>：13pt 分组小标题（<code>--ios-ink2</code>，非 ALL-CAPS）+ 白卡圆角 16 + 微投影，卡片四周不贴屏幕边。</li>
+        <li><b>行结构</b>：30px 圆角 8 彩色图标方块 + 17px 行名 + 16px <code>--ios-ink2</code> 值 + 8×14 chevron，行高 ≥52pt。</li>
+        <li><b>57px 内嵌分隔线</b>：分隔线从图标之后（左起 57px）起，不是通栏线；.5px 发丝线 <code>--ios-sep</code>。</li>
+        <li><b>按压反馈</b>：<code>:active</code> 底色 5% 墨色，过渡走 <code>--ios-damped</code>。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>按住任意一行：看按压底色从行内浮现。</li>
+        <li>点「睡前提醒」行内的开关占位（本组件内联的最小开关 markup）。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>无 ALL-CAPS 分组标题、无 stock 蓝、无通栏分隔线。</li>
+        <li>无 backdrop-filter、无毛玻璃卡片。</li>
+        <li>分隔线绝不穿过图标——57px 内嵌是硬规则。</li>
+      </ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

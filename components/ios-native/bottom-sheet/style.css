@@ -1,0 +1,68 @@
+/* ============================================================
+   bottom-sheet · iOS 底部面板
+   出处：apple-design（HIG 结构）+ mobile-ui-craft（iOS 段 · 非玻璃）
+   ============================================================ */
+
+/* iOS: demo 舞台暖纸底 */
+.phone{background:var(--ios-bg)}
+
+.screen{display:flex;flex-direction:column}
+.ios-sheet-body{
+  flex:1;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:0 24px;
+}
+.ios-sheet-lead{font-size:34px;line-height:41px;font-weight:700;color:var(--ios-ink);letter-spacing:.2px}
+.ios-sheet-leadv{font-size:15px;color:var(--ios-ink2);margin-bottom:14px}
+.ios-sheet-hint{font-size:13px;color:var(--ios-ink2);line-height:1.7;margin-bottom:20px}
+
+/* HIG: 触发按钮——实心胶囊，唯一强调色 --ios-accent，按压 scale 走 --ios-spring */
+.ios-sheet-open{
+  height:50px;padding:0 34px;align-self:flex-start;border:0;border-radius:25px;
+  background:var(--ios-accent);color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer;
+  transition:transform .3s var(--ios-spring),opacity var(--ios-damped);
+}
+.ios-sheet-open:active{transform:scale(.96)}
+
+/* iOS: 遮罩 rgba(20,16,10,.32) 纯色压暗，绝不模糊 —— 0 个 backdrop-filter，
+   淡入走 --ios-damped（颜色/透明度临界阻尼） */
+.ios-veil{
+  position:absolute;inset:0;background:rgba(20,16,10,.32);opacity:0;pointer-events:none;z-index:40;
+  transition:opacity .35s var(--ios-damped);
+}
+.ios-veil.ios-show{opacity:1;pointer-events:auto}
+
+/* iOS: 白面板 14px 14px 0 0 圆角，translateY(110%) → 0 走 --ios-spring 弹起 */
+.ios-sheet{
+  position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:14px 14px 0 0;z-index:50;
+  transform:translateY(110%);transition:transform .5s var(--ios-spring);padding:10px 20px 34px;
+}
+.ios-sheet.ios-show{transform:translateY(0)}
+/* HIG: grabber 36×5，弱提示可下拉关闭 */
+.ios-grabber{width:36px;height:5px;border-radius:3px;background:rgba(33,28,20,.18);margin:0 auto 14px}
+.ios-sheet-title{font-size:20px;font-weight:700;color:var(--ios-ink);margin-bottom:4px}
+.ios-sheet-sub{font-size:13px;color:var(--ios-ink2);margin-bottom:16px}
+/* iOS: srow 用 .5px 发丝线分隔，最后一行无线 */
+.ios-srow{
+  display:flex;justify-content:space-between;align-items:center;padding:13px 0;
+  border-bottom:.5px solid var(--ios-sep);font-size:16px;color:var(--ios-ink);
+}
+.ios-srow-last{border-bottom:none}
+.ios-srow-val{color:var(--ios-ink2);font-size:15px}
+/* HIG: 次按钮走 tinted（--ios-accent12 底 + --ios-accent 字），不与主按钮抢层级 */
+.ios-sheet-done{
+  width:100%;height:50px;border:0;border-radius:25px;background:var(--ios-accent12);color:var(--ios-accent);
+  font:inherit;font-size:17px;font-weight:600;margin-top:18px;cursor:pointer;
+  transition:transform .3s var(--ios-spring);
+}
+.ios-sheet-done:active{transform:scale(.97)}
+
+/* 行内开关占位：本组件自带的内联最小 markup（不 link ios-switch 组件） */
+.ios-sw{
+  width:51px;height:31px;border-radius:999px;background:#E9E9EA;position:relative;flex:none;cursor:pointer;
+  transition:background .3s var(--ios-damped);
+}
+.ios-sw i{
+  position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:999px;background:#fff;
+  box-shadow:0 3px 8px rgba(0,0,0,.15);transition:transform .35s var(--ios-spring);
+}
+.ios-sw.ios-on{background:var(--ios-green)}
+.ios-sw.ios-on i{transform:translateX(20px)}

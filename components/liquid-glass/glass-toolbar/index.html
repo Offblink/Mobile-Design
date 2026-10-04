@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玻璃工具条 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="../../../shared/glass.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">liquid-glass</span><span class="tag alt">mobile-ui-craft · apple-design</span></div>
+    <h1>玻璃工具条（glass-toolbar）</h1>
+    <p>浮动在彩色内容上的玻璃顶栏：back 圆钮、居中标题、「完成」唯一着色按钮同处一个容器；下方不透明卡片持续从玻璃下滚过。带 Reduce Transparency 回退与反例开关。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+
+  <div class="stage">
+    <div class="phone">
+      <div class="screen">
+        <!-- 内容层（永远不透明）：彩色照片 + 白卡列表，在玻璃工具条下滚动 -->
+        <div class="scroll">
+          <div class="lg-status"><span>9:41</span><span>ᯤ 🔋</span></div>
+
+          <div class="lg-photo">
+            <div class="lg-cap"><div class="lg-kicker">TODAY · 晨间</div><div class="lg-heading">山雾散在六点半</div></div>
+          </div>
+
+          <div class="lg-body">
+            <div class="lg-sect">今日状态</div>
+            <div class="lg-card">
+              <div class="lg-kicker">恢复指数</div>
+              <div class="lg-value">92</div>
+              <p>睡眠 7 小时 48 分，深睡占比 23%。身体已就绪，适合安排高强度间歇。</p>
+              <div class="lg-chips"><span>静息心率 58</span><span>HRV 64ms</span><span>压力低</span></div>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">本周概览</div>
+              <div class="lg-value">4 / 5</div>
+              <p>还差一次训练达成周目标。建议今晚进行 30 分钟的有氧。</p>
+            </div>
+
+            <div class="lg-sect">训练安排</div>
+            <div class="lg-card">
+              <div class="lg-kicker">训练计划</div>
+              <div class="lg-value">间歇 4×4</div>
+              <p>热身 10 分钟 → 4 组 4 分钟快跑，组间慢跑 3 分钟。完成后记得拉伸。</p>
+              <div class="lg-chips"><span>配速 4′50″</span><span>心率区间 4</span></div>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">饮食</div>
+              <div class="lg-value">1,640 kcal</div>
+              <p>蛋白质 98g / 130g。晚餐建议补一份高蛋白主食。</p>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">明日</div>
+              <div class="lg-value">恢复日</div>
+              <p>低强度活动即可，目标步数 8,000。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 反例角标（仅 demo 用）：玻璃铺错层时的红色警示 -->
+        <div class="lg-never">✕ 反例：玻璃铺到了内容层卡片上（mds NEVER #1）</div>
+
+        <!-- 控件层：整屏唯一的玻璃区（back / 标题 / 完成 同处一个容器） -->
+        <div class="lg-toolbar glass">
+          <span class="lg-back">
+            <svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2L2 10l8 8"/></svg>
+          </span>
+          <span class="lg-ttl">晨间简报</span>
+          <button class="lg-done">完成</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <div class="controls">
+        <div class="ctl" id="ctlRT"><span class="dot"></span>Reduce Transparency</div>
+        <div class="ctl danger" id="ctlAnti"><span class="dot"></span>反例：玻璃铺到内容上</div>
+      </div>
+
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>一个容器</b>：back 圆钮、居中标题、「完成」同处一条 <code>.lg-toolbar</code>（GlassEffectContainer 语义——同器者才可融合）。</li>
+        <li><b>色彩预算</b>：整屏唯一着色主操作是「完成」（systemBlue <code>#0A84FF</code>），back 与标题保持单色。</li>
+        <li><b>Regular 变体</b>：白 58% + blur 24 + 饱和 1.4（<code>--glass-regular-*</code>），服务文本密集的控件层。</li>
+        <li><b>两层纪律</b>：彩色照片与白卡永远不透明，玻璃只浮在它们上面，滚动时从玻璃下掠过。</li>
+        <li><b>深度不是投影</b>：内高光 + 发丝描边（<code>--glass-border</code>）+ 外扩柔影（<code>--glass-shadow</code>），不用 elevation。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li><b>滚动列表</b> → 彩色内容从玻璃下穿过，玻璃的模糊/饱和全部来自背后内容。</li>
+        <li><b>Reduce Transparency</b> → 玻璃变实心灰（<code>body.reduce-transparency</code> 回退，可读性不塌）。</li>
+        <li><b>反例开关</b> → 玻璃错误盖到卡片上，红色 NEVER 角标出现。</li>
+        <li><b>按「完成」</b> → 全屏唯一着色操作的按压回弹。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>玻璃不上内容层、不叠玻璃、不给每个图标上色、不用 ALL-CAPS。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

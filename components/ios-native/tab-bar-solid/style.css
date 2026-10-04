@@ -1,0 +1,44 @@
+/* ============================================================
+   tab-bar-solid · iOS 实心 Tab 栏
+   出处：apple-design（HIG 结构）+ mobile-ui-craft（iOS 段 · 非玻璃）
+   ============================================================ */
+
+/* iOS: demo 舞台暖纸底 */
+.phone{background:var(--ios-bg)}
+
+.screen{display:flex;flex-direction:column}
+.ios-scroll{flex:1;overflow-y:auto;padding:56px 16px 104px;scrollbar-width:none}
+.ios-scroll::-webkit-scrollbar{display:none}
+
+/* iOS: Tab 栏 84pt，rgba(251,247,239,.98) 近乎不透明暖白实心底 + 顶部 .5px 发丝线
+   —— 刻意 0 个 backdrop-filter：非玻璃画法用实心 + 发丝线，不用毛玻璃 */
+.ios-tabbar{
+  position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(251,247,239,.98);
+  display:flex;padding-top:8px;z-index:30;
+}
+.ios-tabbar::before{content:"";position:absolute;top:0;left:0;right:0;height:.5px;background:var(--ios-sep)}
+
+/* HIG: 26px SVG tab + 10px 标签；active --ios-accent、未选 #9A938A，
+   hover/点击只换色且走 --ios-damped（颜色临界阻尼，绝不回弹） */
+.ios-tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#9A938A;cursor:pointer;
+  font-size:10px;transition:color var(--ios-damped);
+}
+.ios-tab svg{width:26px;height:26px}
+.ios-tab:hover{color:var(--ios-ink2)}
+.ios-tab.ios-on,.ios-tab.ios-on:hover{color:var(--ios-accent)}
+.ios-tab-lb{font-weight:500}
+
+/* 占位内容：Tab 栏之上的页面内容（非本组件规则） */
+.ios-tabs-title{font-size:34px;line-height:41px;font-weight:700;color:var(--ios-ink);letter-spacing:.2px}
+.ios-tabs-sub{font-size:15px;color:var(--ios-ink2);margin:2px 0 16px}
+.ios-tabs-card{
+  background:var(--ios-card);border-radius:16px;padding:16px 18px;margin-bottom:12px;
+  box-shadow:0 1px 3px rgba(33,28,20,.05);
+}
+.ios-tabs-card-k{font-size:11px;letter-spacing:2px;font-weight:600;color:var(--ios-accent)}
+.ios-tabs-card-t{
+  font-family:Georgia,"Times New Roman","Songti SC",serif;font-size:19px;line-height:1.35;
+  font-weight:600;color:var(--ios-ink);margin:7px 0 6px;
+}
+.ios-tabs-card-m{font-size:13px;color:var(--ios-ink2)}

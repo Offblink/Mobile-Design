@@ -1,0 +1,100 @@
+/* ============================================================
+   玻璃工具条 glass-toolbar —— Liquid Glass 组
+   出处：mobile-ui-craft（Glass 实现配方）+ apple-design · liquid-glass.md
+   骨架 = 两层纪律：玻璃只在控件层，内容层永远不透明
+   ============================================================ */
+
+/* Glass 组舞台底色（按平台覆盖 frame.css 手机壳底色） */
+.phone{background:#F2F2F7}
+
+/* 说明栏里的开关组与正文间距（frame.css .controls 未设下边距） */
+.notes .controls{margin-bottom:16px}
+
+/* 底部留给浮动工具条的滚动余量 */
+.scroll{padding-bottom:132px}
+
+/* ---------- 内容层（永远不透明） ---------- */
+/* 彩色渐变「照片」：玻璃只有压在彩色内容上才看得出来 */
+.lg-photo{
+  height:260px;position:relative;
+  background:
+    radial-gradient(120% 90% at 15% 10%,#FFD3A5 0%,transparent 55%),
+    radial-gradient(130% 100% at 90% 30%,#FF7E5F 0%,transparent 60%),
+    linear-gradient(160deg,#7B4FA8 0%,#3B2E6E 55%,#171435 100%);
+}
+.lg-photo .lg-cap{position:absolute;left:20px;bottom:18px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.lg-photo .lg-cap .lg-kicker{font-size:11px;letter-spacing:2.2px;opacity:.85}
+.lg-photo .lg-cap .lg-heading{font-family:Georgia,serif;font-size:24px;font-weight:600;margin-top:4px}
+
+/* 状态栏（demo 上下文）：白字压在彩色照片顶部 */
+.lg-status{
+  position:absolute;top:0;left:0;right:0;height:46px;z-index:16;pointer-events:none;
+  display:flex;justify-content:space-between;align-items:center;padding:0 28px 4px;
+  font-size:14px;font-weight:600;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35);
+}
+
+.lg-body{padding:20px 16px 0}
+.lg-sect{font-size:20px;font-weight:700;color:var(--ios-ink);margin:6px 4px 12px}
+
+/* 内容卡：永远不透明（两层纪律的下半层） */
+.lg-card{
+  background:var(--ios-card);border-radius:18px;padding:16px;margin-bottom:14px;color:var(--ios-ink);
+  box-shadow:0 1px 4px rgba(20,20,40,.06);
+}
+.lg-card .lg-kicker{font-size:12px;color:var(--ios-ink2);letter-spacing:.4px}
+.lg-card .lg-value{font-size:30px;font-weight:800;letter-spacing:-.6px;margin:4px 0 2px}
+.lg-card p{font-size:14px;color:var(--ios-ink2);line-height:1.6}
+.lg-chips{display:flex;gap:8px;margin-top:12px}
+.lg-chips span{font-size:12.5px;background:#F2F2F7;border-radius:999px;padding:7px 13px;color:#3a3a40}
+
+/* ---------- 反例（仅 demo 用）：把玻璃错误地铺到内容卡片上 ---------- */
+/* mds NEVER #1 —— 这是错误示范，真实组件永远不要这样写 */
+body.anti-content .lg-card{
+  background:rgba(255,255,255,.42);
+  -webkit-backdrop-filter:var(--glass-regular-filter);
+  backdrop-filter:var(--glass-regular-filter);
+  border:.5px solid var(--glass-border);
+  box-shadow:none;
+}
+/* 反例叠上 Reduce Transparency：回退仍然优先，可读性不塌 */
+body.reduce-transparency.anti-content .lg-card{
+  background:var(--glass-fallback-bg);
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+  border:.5px solid var(--glass-fallback-border);
+}
+
+/* 反例角标（仅 demo 用）：出现即提醒玻璃铺错了层 —— 落在工具条下方，不压标题 */
+.lg-never{
+  position:absolute;top:116px;left:50%;transform:translate(-50%,-8px);z-index:60;
+  opacity:0;pointer-events:none;white-space:nowrap;
+  background:#C42B1C;color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;
+  /* 位置/形状走 spring，透明度走 damped —— 两种语义不混用 */
+  transition:opacity .3s var(--damped),transform .3s var(--spring);
+}
+body.anti-content .lg-never{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- 控件层（唯一的玻璃区） ---------- */
+/* 顶部浮动工具条 = 一个 GlassEffectContainer：back / 标题 / 完成 同处一器 */
+.lg-toolbar{
+  position:absolute;top:54px;left:16px;right:16px;height:52px;border-radius:26px;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;padding:0 7px;color:var(--ios-ink);
+}
+/* back 圆钮：容器内的轻压层，不是第二层玻璃（无 backdrop-filter，不叠玻璃） */
+.lg-toolbar .lg-back{
+  width:38px;height:38px;border-radius:999px;background:rgba(255,255,255,.35);
+  display:grid;place-items:center;cursor:pointer;
+  transition:transform .3s var(--spring);
+}
+.lg-toolbar .lg-back:active{transform:scale(.92)}
+/* 标题真居中：两侧控件宽度不等（back 38px / 完成自适应），用绝对定位对齐中轴 */
+.lg-toolbar .lg-ttl{
+  position:absolute;left:50%;transform:translateX(-50%);
+  font-size:15px;font-weight:600;
+}
+/* 色彩预算：整屏唯一着色主操作 —— 完成（iOS systemBlue） */
+.lg-toolbar .lg-done{
+  height:38px;padding:0 18px;border-radius:999px;border:0;font:inherit;font-size:14.5px;font-weight:600;
+  background:#0A84FF;color:#fff;cursor:pointer;
+  transition:transform .35s var(--spring),filter .2s var(--damped);
+}
+.lg-toolbar .lg-done:active{transform:scale(.92)}

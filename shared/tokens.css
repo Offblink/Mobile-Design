@@ -1,0 +1,79 @@
+/* ============================================================
+   mobile-design · design tokens
+   三套设计语言共用的动效/色彩 token：
+   - Motion：M3 Expressive 双弹簧语义（spatial 回弹 / effects 临界阻尼）
+   - Android M3 roles（Material You 紫罗兰方案）
+   - iOS 原生（暖色阅读向调色，单一强调色）
+   - Liquid Glass 配方值（apple-design 跨平台 recipe：blur/饱和/填充/35% 压暗）
+   ============================================================ */
+:root{
+  /* ---------- Motion ---------- */
+  /* spatial spring：位置 / 尺寸 / 形状（约 10% 回弹，damping≈0.6） */
+  --spring:cubic-bezier(.34,1.56,.64,1);
+  --spring-soft:cubic-bezier(.3,1.4,.5,1);
+  /* effects spring：颜色 / 透明度（临界阻尼，绝不回弹，damping=1.0） */
+  --damped:cubic-bezier(.2,0,0,1);
+  /* iOS 控件通用过渡 */
+  --ios-spring:cubic-bezier(.34,1.56,.64,1);
+  --ios-damped:cubic-bezier(.25,.1,.25,1);
+
+  /* ---------- Android · Material 3 color roles ---------- */
+  --m3-primary:#6750A4;
+  --m3-on-primary:#FFFFFF;
+  --m3-primary-container:#EADDFF;
+  --m3-on-primary-container:#21005D;
+  --m3-secondary:#625B71;
+  --m3-secondary-container:#E8DEF8;
+  --m3-on-secondary-container:#1D192B;
+  --m3-tertiary:#7D5260;
+  --m3-tertiary-container:#FFD8E4;
+  --m3-on-tertiary-container:#31111D;
+  --m3-surface:#FEF7FF;
+  --m3-on-surface:#1D1B20;
+  --m3-surface-variant:#E7E0EC;
+  --m3-on-surface-variant:#49454F;
+  --m3-sc-lowest:#FFFFFF;
+  --m3-sc-low:#F3EDF7;
+  --m3-sc:#ECE6F0;
+  --m3-sc-high:#E6E0E9;
+  --m3-sc-highest:#E0D8E9;
+  --m3-outline:#79747E;
+  --m3-outline-variant:#CAC4D0;
+  --m3-error:#B3261E;
+
+  /* ---------- iOS 原生调色（warm / organic）---------- */
+  --ios-bg:#FBF7EF;
+  --ios-card:#FFFFFF;
+  --ios-ink:#211C14;
+  --ios-ink2:#6E675C;
+  --ios-accent:#B4552D;              /* 唯一强调色，拒绝通体 stock 蓝 */
+  --ios-accent12:rgba(180,85,45,.12);
+  --ios-green:#34C759;               /* 系统开关绿 */
+  --ios-sep:rgba(33,28,20,.10);      /* 发丝线 */
+  --ios-track:rgba(33,28,20,.06);
+
+  /* ---------- Liquid Glass 配方 ---------- */
+  /* Regular：默认变体（文本密集场景） */
+  --glass-regular-bg:rgba(255,255,255,.58);
+  --glass-regular-filter:blur(24px) saturate(1.4);
+  /* Clear：只压在视觉丰富的媒体上 */
+  --glass-clear-bg:rgba(255,255,250,.20);
+  --glass-clear-filter:blur(14px) saturate(1.5);
+  /* Apple 唯一公布的数字：亮媒体上 35% 压暗层 */
+  --glass-dim:rgba(0,0,0,.35);
+  --glass-border:rgba(255,255,255,.7);
+  --glass-hairline:inset 0 1px 0 rgba(255,255,255,.75);
+  --glass-shadow:0 10px 34px rgba(30,30,60,.16);
+  /* Reduce Transparency → .identity 不透明回退 */
+  --glass-fallback-bg:#F4F4F8;
+  --glass-fallback-border:rgba(0,0,0,.09);
+}
+
+/* 系统关动效 → 全部降级（M3 Expressive 无障碍要求） */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}

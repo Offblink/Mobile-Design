@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>滚动边缘效果 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="../../../shared/glass.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">liquid-glass</span><span class="tag alt">mobile-ui-craft · apple-design</span></div>
+    <h1>滚动边缘效果（scroll-edge）</h1>
+    <p>内容撞向玻璃工具条时的 118px 渐隐缓冲带：顶部最实（0.95），随滚动实时淡出，滚过 90px 完全消失。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+
+  <div class="stage">
+    <div class="phone">
+      <div class="screen">
+        <!-- scroll-edge 渐隐带：内容层的缓冲垫（JS 驱动透明度，页面加载即执行一次） -->
+        <div class="lg-edge" id="edge"></div>
+
+        <!-- demo 上下文：内联一条玻璃工具条，彩色内容从它底下撞过去 -->
+        <div class="lg-edgebar glass">冲浪日志</div>
+
+        <!-- 内容层（永远不透明）：彩色照片 + 白卡，供滚动 -->
+        <div class="scroll" id="sc">
+          <div class="lg-photo">
+            <div class="lg-cap"><div class="lg-kicker">LINEUP · 今日浪况</div><div class="lg-heading">东风把浪推上了岸</div></div>
+          </div>
+
+          <div class="lg-body">
+            <div class="lg-sect">晨报</div>
+            <div class="lg-card">
+              <div class="lg-kicker">浪高</div>
+              <div class="lg-value">1.4 m</div>
+              <p>周期 12 秒，风向偏东。适合长板，短板等下午潮位再看。</p>
+              <div class="lg-chips"><span>潮位 1.1 m</span><span>水温 22℃</span><span>能见度 好</span></div>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">风力</div>
+              <div class="lg-value">3 级</div>
+              <p>上午离岸风，下午转 4 级沿岸。建议上午下水。</p>
+            </div>
+          </div>
+
+          <div class="lg-photo lg-photo--sea">
+            <div class="lg-cap"><div class="lg-kicker">SUNSET · 收工浪</div><div class="lg-heading">最后一组留给落日</div></div>
+          </div>
+
+          <div class="lg-body">
+            <div class="lg-sect">装备</div>
+            <div class="lg-card">
+              <div class="lg-kicker">今天的板</div>
+              <div class="lg-value">7′2″</div>
+              <p>Fish 板型，脚绳已换新。蜡温偏软，补一层 base。</p>
+              <div class="lg-chips"><span>单节 3 fin</span><span>Leash 新</span></div>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">明日</div>
+              <div class="lg-value"> swell 增强</div>
+              <p>预报 1.8 m / 13 s。早点到，抢占右侧起浪点。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>为什么需要它</b>：内容直接撞上玻璃条会糊成一团——顶部 118px 渐隐带先给内容一个「让位缓冲」，越贴近工具条越实、越远越透。</li>
+        <li><b>透明度公式</b>：<code>opacity = max(0, 1 - y/90) × 0.95</code>——贴顶最实 0.95，滚过 90px 完全淡出，随滚动实时驱动，不用定时器轮询。</li>
+        <li><b>初始即正确</b>：页面加载就执行一次 <code>onScroll</code>，顶部不是 0 而是 0.95（不等第一次滚动）。</li>
+        <li><b>它不是玻璃</b>：渐隐带是内容层的缓冲垫（z 在工具条之下），玻璃本体只有工具条一处——两层纪律不破。</li>
+        <li><b>颜色同源</b>：渐变取 <code>--glass-fallback-bg</code>（#F4F4F8），与 Reduce Transparency 回退同色，视觉上是同一块「底」。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li><b>看顶部</b>：照片上缘被渐隐带「吃掉」，滚回来又复现。</li>
+        <li><b>向下滚</b>：渐隐带淡出、彩色内容完整露出；玻璃工具条保持不变——动的是缓冲带，不是玻璃。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>玻璃不铺到内容上、不用定时器轮询滚动、不做全屏遮罩（只有 118px 缓冲带）、不给工具条叠第二层玻璃。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

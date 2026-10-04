@@ -1,0 +1,60 @@
+/* ============================================================
+   Clear 变体条 clear-variant-bar —— Liquid Glass 组
+   出处：mobile-ui-craft（Glass 实现配方）+ apple-design · liquid-glass.md
+   两层纪律：玻璃只在控件层（媒体上的控制条），内容层永远不透明
+   ============================================================ */
+
+/* Glass 组舞台底色（按平台覆盖 frame.css 手机壳底色） */
+.phone{background:#F2F2F7}
+
+.scroll{padding-bottom:48px}
+
+/* ---------- 内容层（永远不透明） ---------- */
+/* 状态栏（demo 上下文）：深色字压在浅色底上，位于照片之前 */
+.lg-status{
+  position:absolute;top:0;left:0;right:0;height:46px;z-index:16;pointer-events:none;
+  display:flex;justify-content:space-between;align-items:center;padding:0 28px 4px;
+  font-size:14px;font-weight:600;color:var(--ios-ink);
+}
+
+.lg-head{padding:58px 20px 14px;color:var(--ios-ink)}
+.lg-head .lg-kicker{font-size:11px;letter-spacing:2.2px;color:var(--ios-ink2)}
+.lg-head .lg-h1{font-size:28px;font-weight:800;letter-spacing:-.4px;margin-top:4px}
+
+/* 彩色「照片」块：Clear 只压在这种视觉丰富的媒体上（高约 190） */
+.lg-wrap{position:relative;margin:0 16px 14px;border-radius:18px;overflow:hidden}
+.lg-photo{
+  height:190px;position:relative;
+  background:
+    radial-gradient(110% 80% at 80% 0%,#FFEB9A 0%,transparent 50%),
+    radial-gradient(140% 110% at 10% 90%,#43CBFF 0%,transparent 55%),
+    linear-gradient(150deg,#0F7C8A 0%,#134B6E 60%,#0A2340 100%);
+}
+
+.lg-body{padding:0 16px}
+/* 内容卡：永远不透明（两层纪律的下半层）——与玻璃条同屏对照 */
+.lg-card{
+  background:var(--ios-card);border-radius:18px;padding:16px;margin-bottom:14px;color:var(--ios-ink);
+  box-shadow:0 1px 4px rgba(20,20,40,.06);
+}
+.lg-card .lg-kicker{font-size:12px;color:var(--ios-ink2);letter-spacing:.4px}
+.lg-card .lg-value{font-size:30px;font-weight:800;letter-spacing:-.6px;margin:4px 0 2px}
+.lg-card p{font-size:14px;color:var(--ios-ink2);line-height:1.6}
+.lg-chips{display:flex;gap:8px;margin-top:12px}
+.lg-chips span{font-size:12.5px;background:#F2F2F7;border-radius:999px;padding:7px 13px;color:#3a3a40}
+
+/* ---------- 控件层（唯一的玻璃区） ---------- */
+/* Clear 变体控制条：白 20% + blur 14 + 饱和 1.5（.glass.clear 提供），只压在媒体上 */
+.lg-clearbar{
+  position:absolute;left:14px;right:14px;bottom:14px;height:54px;border-radius:27px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 18px;color:#fff;
+}
+/* 文案与 play 钮必须在 35% 压暗层之上（压暗层只压背后的媒体） */
+.lg-txt,.lg-play{position:relative;z-index:1}
+.lg-txt{font-size:13.5px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.3)}
+.lg-play{
+  width:38px;height:38px;border-radius:999px;background:rgba(255,255,255,.9);color:#171435;
+  display:grid;place-items:center;font-size:15px;cursor:pointer;
+  transition:transform .3s var(--spring);   /* 按压反馈走 spring */
+}
+.lg-play:active{transform:scale(.9)}

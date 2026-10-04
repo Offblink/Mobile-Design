@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clear 变体条 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="../../../shared/glass.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">liquid-glass</span><span class="tag alt">mobile-ui-craft · apple-design</span></div>
+    <h1>Clear 变体条（clear-variant-bar）</h1>
+    <p>压在彩色照片上的 Clear 玻璃控制条：白 20% + blur 14，并内垫 Apple 唯一公布的 35% 压暗层，保证白字在任何照片上都可读。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+
+  <div class="stage">
+    <div class="phone">
+      <div class="screen">
+        <!-- 内容层（永远不透明） -->
+        <div class="scroll">
+          <div class="lg-status"><span>9:41</span><span>ᯤ 🔋</span></div>
+
+          <div class="lg-head">
+            <div class="lg-kicker">LISTENING</div>
+            <div class="lg-h1">Ambient 精选</div>
+          </div>
+
+          <!-- 彩色「照片」块（190px 渐变）+ 压在其上的 Clear 控制条 -->
+          <div class="lg-wrap">
+            <div class="lg-photo"></div>
+            <div class="lg-clearbar glass clear">
+              <!-- 35% 压暗层（Apple 唯一公布的数字，来自 shared/glass.css） -->
+              <div class="glass-dim"></div>
+              <span class="lg-txt">海雾 · Ambient Mix</span>
+              <span class="lg-play">▶</span>
+            </div>
+          </div>
+
+          <div class="lg-body">
+            <div class="lg-card">
+              <div class="lg-kicker">接下来</div>
+              <div class="lg-value">12 首</div>
+              <p>全部为无歌词环境音，适合深度工作时段循环播放。</p>
+              <div class="lg-chips"><span>48 kHz</span><span>无缝衔接</span></div>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">本机缓存</div>
+              <div class="lg-value">320 MB</div>
+              <p>离线可用，通勤路上不耗流量。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>Regular / Clear 分工</b>：Regular（白 58% + blur 24 + 饱和 1.4）服务文本密集的工具条、Tab 条；Clear（白 20% + blur 14 + 饱和 1.5，<code>.glass.clear</code>）只压在照片/视频这类视觉丰富的媒体上——本条控制条就是 Clear。</li>
+        <li><b>35% 压暗层</b>：<code>.glass-dim</code> = <code>--glass-dim</code>（rgba(0,0,0,.35)）。这个 35% 是 Apple 对 Liquid Glass 配方唯一公布的数字：亮媒体上垫 35% 黑，玻璃上的白字才在任何照片上都可读（出处见 apple-design skill 的 liquid-glass.md recipe，token 固化在 tokens.css）。</li>
+        <li><b>图层顺序</b>：照片 → 玻璃模糊/底色 → 35% 压暗层 → 文案与白色 play 钮（<code>z-index</code> 在压暗层之上，压暗层只压背后的媒体）。</li>
+        <li><b>两层纪律</b>：照片本体不透明；玻璃条只占媒体底部 54px，圆角 27 与外层 18px 圆角成比例。</li>
+        <li><b>可读性</b>：白字带轻微 text-shadow，压在最亮的黄色高光区也不失读。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li><b>对比同屏白卡</b>（完全不透明）与玻璃条（透出照片色彩）——这就是两种层的分工。</li>
+        <li><b>按 play 圆钮</b> → 看按压回弹（<code>--spring</code>）。</li>
+        <li><b>滚动列表</b> → 玻璃条随照片一起移动：它是媒体的控件层，不是浮在整个页面上的。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>Clear 不用于文本密集区、玻璃不铺到白卡上、不叠玻璃、图标不上色。</li>
+      </ul>
+    </aside>
+  </div>
+</body>
+</html>

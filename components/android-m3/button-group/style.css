@@ -1,0 +1,39 @@
+/* ============================================================
+   button-group · M3 connected 分段按钮
+   出处：material-3（token）+ mobile-ui-craft（生成工艺）
+   ============================================================ */
+
+/* M3 demo 舞台：手机底色用 surface 角色 */
+.phone{background:var(--m3-surface)}
+
+/* 页面骨架 */
+.md3-status{position:absolute;top:0;left:0;right:0;height:34px;display:flex;justify-content:space-between;align-items:center;
+  padding:0 20px;font-size:12px;font-weight:700;color:var(--m3-on-surface);z-index:30;pointer-events:none}
+.md3-scroll{position:absolute;inset:0;overflow-y:auto;padding:56px 16px 32px;scrollbar-width:none}
+.md3-scroll::-webkit-scrollbar{display:none}
+
+/* 上下文卡：统计周期 */
+.md3-card{background:var(--m3-sc-low);border-radius:24px;padding:20px}
+.md3-cardhead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.md3-cardtitle{font-size:15px;font-weight:700;color:var(--m3-on-surface)}
+.md3-cardhint{font-size:11px;font-weight:600;color:var(--m3-secondary);letter-spacing:.4px}
+
+/* M3: connected ButtonGroup——一条 outline-variant 外框连成整体，替代 SegmentedButton */
+.md3-bgroup{display:flex;border:1px solid var(--m3-outline-variant);border-radius:999px;overflow:hidden;width:max-content}
+.md3-bgroup button{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;
+  color:var(--m3-on-surface-variant);padding:9px 18px;cursor:pointer;
+  transition:background var(--damped),color var(--damped)}
+/* 竖分隔线只画在相邻项之间，容器外框统一兜住 */
+.md3-bgroup button+button{border-left:1px solid var(--m3-outline-variant)}
+/* 选中项 = secondary-container 底（effects spring，颜色不回弹） */
+.md3-bgroup button.on{background:var(--m3-secondary-container);color:var(--m3-on-secondary-container)}
+/* 未选项 hover = sc state layer */
+.md3-bgroup button:not(.on):hover{background:var(--m3-sc)}
+.md3-bgroup button:focus-visible{outline:2px solid var(--m3-primary);outline-offset:-2px}
+
+/* 切换后的数值（emphasized 数字节奏） */
+.md3-stat{margin-top:18px}
+.md3-statnum{font-size:34px;font-weight:800;letter-spacing:-1px;color:var(--m3-on-surface);font-variant-numeric:tabular-nums;
+  transition:opacity var(--damped)}
+.md3-statlab{font-size:12px;color:var(--m3-on-surface-variant);margin-top:2px}
+.md3-statnum.swap{opacity:.35}

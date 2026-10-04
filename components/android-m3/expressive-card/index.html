@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero Moment 卡组 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">android-m3</span><span class="tag alt">skill: material-3 · mobile-ui-craft</span></div>
+    <h1>Hero Moment 卡组（expressive-card）</h1>
+    <p>M3 Expressive 的主角卡组：hero 卡点击后整体形变——圆角 28px→8/40/8/40、渐变方向互换（spring 形变 + damped 色移同帧）；下方两张形状对比卡悬停同样形变。数字 40px/800 字重制造编辑感。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="md3-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+      <div class="md3-scroll">
+
+        <!-- Hero moment：形变 + 色移 + 字重，三者同帧联动 -->
+        <div class="md3-hero" id="hero">
+          <span class="md3-badge">hero moment · 点我</span>
+          <div class="md3-kicker">今日步数</div>
+          <div class="md3-big">12,480</div>
+          <div class="md3-sub">超过 86% 的训练伙伴 · 距目标还差 2,520 步</div>
+          <div class="md3-row">
+            <span class="md3-pace">配速 5′42″</span>
+            <button class="md3-go">开始慢跑</button>
+          </div>
+        </div>
+
+        <!-- 形状对比：同屏不同形，拒绝均匀圆角 -->
+        <div class="md3-cards">
+          <div class="md3-card md3-c1"><span class="md3-cn">静息心率</span><span class="md3-cv">58<small> bpm</small></span></div>
+          <div class="md3-card md3-c2"><span class="md3-cn">连续打卡</span><span class="md3-cv">21<small> 天</small></span></div>
+        </div>
+      </div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>Hero 形变</b>：点卡片触发 <code>border-radius: 28px → 8px 40px 8px 40px</code>（<code>--spring</code> 形变）+ 渐变 primary→tertiary 与 tertiary→primary <b>互换方向</b>（<code>--damped</code> 色移）——同帧联动、曲线各走各的。</li>
+        <li><b>强调字重</b>：主数字 40px / 800 字重 / -1px 字距 + tabular-nums，正文 400 基线，二者对比制造节奏。</li>
+        <li><b>形状多样</b>：两张对比卡各用 <code>24px 24px 24px 8px</code> 与 <code>999px 999px 24px 24px</code>（tertiary-container 底），hover 同样形变到 8/40/8/40。</li>
+        <li><b>开始慢跑</b>：hover 放大 1.05 + 阴影，按下压到 0.96——spatial spring 的按压缩放。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>点 <b>hero 卡</b>（避开按钮）→ 圆角形变与渐变换向同帧发生，再点一次回弹。</li>
+        <li>悬停两张小卡 → 同款形变；按住 <b>开始慢跑</b> 看压缩回弹。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>不做淡入淡出代替形变（Morph 优先）、不用均匀圆角、不给 hero 用 primary 一色到底、数字不用 400 字重。</li></ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+/* ============================================================
+   spring-switch · M3 双弹簧开关
+   出处：material-3（token）+ mobile-ui-craft（生成工艺）
+   ============================================================ */
+
+/* M3 demo 舞台：手机底色用 surface 角色 */
+.phone{background:var(--m3-surface)}
+
+/* 页面骨架（edge-to-edge + 状态栏留白） */
+.md3-status{position:absolute;top:0;left:0;right:0;height:34px;display:flex;justify-content:space-between;align-items:center;
+  padding:0 20px;font-size:12px;font-weight:700;color:var(--m3-on-surface);z-index:30;pointer-events:none}
+.md3-scroll{position:absolute;inset:0;overflow-y:auto;padding:44px 16px 32px;scrollbar-width:none}
+.md3-scroll::-webkit-scrollbar{display:none}
+.md3-h2{font-size:22px;font-weight:700;color:var(--m3-on-surface);margin-bottom:14px;letter-spacing:-.3px}
+
+/* 设置行容器 */
+.md3-setrow{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--m3-sc-low);
+  border-radius:20px;padding:16px 18px;margin-bottom:14px}
+.md3-settext{min-width:0}
+.md3-t1{font-size:15px;font-weight:600;color:var(--m3-on-surface)}
+.md3-t2{font-size:12px;color:var(--m3-on-surface-variant);line-height:1.55;margin-top:2px}
+
+/* M3: knob 走 spatial spring（位置/尺寸可回弹），轨道色走 effects spring（绝不回弹） */
+.md3-sw{width:52px;height:32px;border-radius:999px;background:var(--m3-sc-highest);border:2px solid var(--m3-outline);
+  position:relative;cursor:pointer;flex:none;transition:background var(--damped),border-color var(--damped)}
+/* M3: 勾选图标用 primary 色——on 态 knob 是 on-primary（白底），白勾会隐形 */
+.md3-sw i{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:999px;background:var(--m3-outline);
+  display:grid;place-items:center;color:var(--m3-primary);
+  transition:transform .45s var(--spring),width .35s var(--spring),height .35s var(--spring),
+  top .35s var(--spring),background var(--damped)}
+.md3-sw.on{background:var(--m3-primary);border-color:var(--m3-primary)}
+/* M3: on 态位移 20px + 24→28px，spring 曲线带约 10% 回弹 */
+.md3-sw.on i{transform:translateX(20px);width:28px;height:28px;top:0;background:var(--m3-on-primary)}
+/* 勾选图标显隐属于透明度 → damped，不回弹 */
+.md3-sw svg{opacity:0;transition:opacity var(--damped);width:14px}
+.md3-sw.on svg{opacity:1}
+.md3-sw:focus-visible{outline:2px solid var(--m3-primary);outline-offset:3px}

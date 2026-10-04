@@ -1,0 +1,80 @@
+/* ============================================================
+   玻璃 Tab 条 glass-tab-bar —— Liquid Glass 组
+   出处：mobile-ui-craft（Glass 实现配方）+ apple-design · tab-bars 行为
+   两层纪律：玻璃只在控件层，内容层永远不透明
+   ============================================================ */
+
+/* Glass 组舞台底色（按平台覆盖 frame.css 手机壳底色） */
+.phone{background:#F2F2F7}
+
+/* 底部留给浮动 Tab 条的滚动余量 */
+.scroll{padding-bottom:112px}
+
+/* ---------- 内容层（永远不透明） ---------- */
+/* 彩色渐变「照片」：玻璃只有压在彩色内容上才看得出来 */
+.lg-photo{
+  height:280px;position:relative;
+  background:
+    radial-gradient(120% 90% at 15% 10%,#FFD3A5 0%,transparent 55%),
+    radial-gradient(130% 100% at 90% 30%,#FF7E5F 0%,transparent 60%),
+    linear-gradient(160deg,#7B4FA8 0%,#3B2E6E 55%,#171435 100%);
+}
+/* 第二张彩色照片（teal）：滚动中让玻璃换一种读数 */
+.lg-photo--sea{
+  background:
+    radial-gradient(110% 80% at 80% 0%,#FFEB9A 0%,transparent 50%),
+    radial-gradient(140% 110% at 10% 90%,#43CBFF 0%,transparent 55%),
+    linear-gradient(150deg,#0F7C8A 0%,#134B6E 60%,#0A2340 100%);
+}
+.lg-photo .lg-cap{position:absolute;left:20px;bottom:18px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.lg-photo .lg-cap .lg-kicker{font-size:11px;letter-spacing:2.2px;opacity:.85}
+.lg-photo .lg-cap .lg-heading{font-family:Georgia,serif;font-size:24px;font-weight:600;margin-top:4px}
+
+/* 状态栏（demo 上下文）：白字压在彩色照片顶部 */
+.lg-status{
+  position:absolute;top:0;left:0;right:0;height:46px;z-index:16;pointer-events:none;
+  display:flex;justify-content:space-between;align-items:center;padding:0 28px 4px;
+  font-size:14px;font-weight:600;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35);
+}
+
+.lg-body{padding:20px 16px 0}
+.lg-sect{font-size:20px;font-weight:700;color:var(--ios-ink);margin:6px 4px 12px}
+
+/* 内容卡：永远不透明（两层纪律的下半层） */
+.lg-card{
+  background:var(--ios-card);border-radius:18px;padding:16px;margin-bottom:14px;color:var(--ios-ink);
+  box-shadow:0 1px 4px rgba(20,20,40,.06);
+}
+.lg-card .lg-kicker{font-size:12px;color:var(--ios-ink2);letter-spacing:.4px}
+.lg-card .lg-value{font-size:30px;font-weight:800;letter-spacing:-.6px;margin:4px 0 2px}
+.lg-card p{font-size:14px;color:var(--ios-ink2);line-height:1.6}
+.lg-chips{display:flex;gap:8px;margin-top:12px}
+.lg-chips span{font-size:12.5px;background:#F2F2F7;border-radius:999px;padding:7px 13px;color:#3a3a40}
+
+/* ---------- 控件层（唯一的玻璃区） ---------- */
+/* 底部玻璃 Tab 条：尺寸/圆角用 spring，颜色/透明度用 damped —— 两种动效语义不混用 */
+.lg-tabbar{
+  position:absolute;left:12px;right:12px;bottom:14px;height:74px;border-radius:32px;z-index:40;
+  display:flex;align-items:center;justify-content:space-around;color:var(--ios-ink2);
+  transition:height .45s var(--spring),border-radius .45s var(--spring);
+}
+/* 最小化：向下滚 >140px → 收缩至 54px、圆角同步 27 保持胶囊比例 */
+.lg-tabbar.compact{height:54px;border-radius:27px}
+
+.lg-tab{
+  display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;position:relative;
+  transition:transform .4s var(--spring),color .25s var(--damped),gap .35s var(--spring);
+}
+.lg-tab svg{width:25px;height:25px;transition:transform .4s var(--spring)}
+/* label 折叠：max-height 有显式初值，收起才有过渡 */
+.lg-lb{
+  max-height:16px;font-size:10px;font-weight:500;overflow:hidden;
+  transition:opacity .25s var(--damped),max-height .35s var(--spring);
+}
+.lg-tabbar.compact .lg-lb{opacity:0;max-height:0}
+.lg-tabbar.compact .lg-tab{gap:0}
+
+/* active：色加深 + 图标放大 1.12（图标本身仍是 currentColor 单色） */
+.lg-tab.on{color:var(--ios-ink)}
+.lg-tab.on svg{transform:scale(1.12)}
+.lg-tab:active{transform:scale(.88)}

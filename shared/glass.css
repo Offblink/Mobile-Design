@@ -1,0 +1,41 @@
+/* ============================================================
+   mobile-design · Liquid Glass 基础类
+   玻璃只属于「浮在内容上的控件层」——内容层永远不透明。
+   配方值来自 apple-design references/hig/liquid-glass.md 的
+   跨平台 recipe（blur 24 / 饱和 1.4 / 白 58% / Clear 35% 压暗）。
+   ============================================================ */
+
+/* Regular 变体：默认（文本密集、通用控件） */
+.glass{
+  background:var(--glass-regular-bg);
+  -webkit-backdrop-filter:var(--glass-regular-filter);
+  backdrop-filter:var(--glass-regular-filter);
+  border:.5px solid var(--glass-border);
+  box-shadow:var(--glass-hairline),var(--glass-shadow);
+}
+
+/* Clear 变体：只压在照片/视频等视觉丰富的媒体上 */
+.glass.clear{
+  background:var(--glass-clear-bg);
+  -webkit-backdrop-filter:var(--glass-clear-filter);
+  backdrop-filter:var(--glass-clear-filter);
+  border-color:rgba(255,255,255,.5);
+}
+
+/* 亮媒体上的 35% 压暗层（Apple 公布的唯一数字） */
+.glass-dim{
+  position:absolute;inset:0;
+  background:var(--glass-dim);
+  border-radius:inherit;
+  pointer-events:none;
+}
+
+/* Reduce Transparency → .identity 不透明回退（可读性不塌） */
+body.reduce-transparency .glass,
+body.reduce-transparency .glass.clear{
+  background:var(--glass-fallback-bg);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  border:.5px solid var(--glass-fallback-border);
+  box-shadow:0 8px 26px rgba(30,30,60,.12);
+}

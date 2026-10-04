@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玻璃 FAB · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="../../../shared/glass.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">liquid-glass</span><span class="tag alt">mobile-ui-craft · apple-design</span></div>
+    <h1>玻璃 FAB（glass-fab）</h1>
+    <p>浮在彩色衬底上的 56px 玻璃圆形操作钮：单色铅笔图标、按压 scale .9 弹性回弹，卡片从它底下滚过。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+
+  <div class="stage">
+    <div class="phone">
+      <div class="screen">
+        <!-- 彩色衬底：静态渐变，玻璃 FAB 与不透明卡片都压在它上面 -->
+        <div class="lg-bg"></div>
+
+        <!-- 内容层（永远不透明） -->
+        <div class="scroll">
+          <div class="lg-status"><span>9:41</span><span>ᯤ 🔋</span></div>
+
+          <div class="lg-intro">
+            <div class="lg-kicker">NEW ENTRY</div>
+            <div class="lg-h1">记一笔</div>
+            <p>点右下角的玻璃 FAB 新建一条记录。</p>
+          </div>
+
+          <div class="lg-body">
+            <div class="lg-card">
+              <div class="lg-kicker">早餐</div>
+              <div class="lg-value">420 kcal</div>
+              <p>燕麦 + 希腊酸奶 + 蓝莓。蛋白质 24g，碳水控制得不错。</p>
+              <div class="lg-chips"><span>08:12</span><span>已同步</span></div>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">晨跑</div>
+              <div class="lg-value">5.2 km</div>
+              <p>配速 5′38″，心率区间 3。路面湿滑，注意步频稳定。</p>
+              <div class="lg-chips"><span>32 分钟</span><span>步频 176</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 控件层：唯一的玻璃区 -->
+        <div class="lg-fab glass" title="新建记录">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20l4-1L20 7l-3-3L5 16z"/><path d="M14 6l3 3"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>只属于控件层</b>：56px 玻璃圆钮浮在彩色衬底与白卡之上，不参与内容排版（两层纪律）。</li>
+        <li><b>按压回弹</b>：<code>scale(.9)</code> 走 <code>--spring</code>，回弹一次，绝不用来回震荡的动画。</li>
+        <li><b>色彩预算</b>：图标是单色 <code>currentColor</code> 铅笔——玻璃本身不上渐变、不着色。</li>
+        <li><b>Regular 变体</b>：白 58% + blur 24 + 饱和 1.4（<code>.glass</code>），边缘靠发丝描边 + 内高光表达透镜感。</li>
+        <li><b>Reduce Transparency</b>：系统开启后自动变实心灰（<code>--glass-fallback-bg</code>），可读性不塌。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li><b>按住 FAB</b> → 看按压与回弹的弹簧节奏。</li>
+        <li><b>滚动列表</b> → 白卡从 FAB 下穿过，玻璃的模糊/饱和来自背后内容；衬底是彩色时读数最明显。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>不给 FAB 上彩色渐变、不叠第二层玻璃、不用 elevation 投影、不用彩色图标。</li>
+      </ul>
+    </aside>
+  </div>
+</body>
+</html>

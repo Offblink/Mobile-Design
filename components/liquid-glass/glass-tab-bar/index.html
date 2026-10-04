@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玻璃 Tab 条 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="../../../shared/glass.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">liquid-glass</span><span class="tag alt">mobile-ui-craft · apple-design</span></div>
+    <h1>玻璃 Tab 条（glass-tab-bar）</h1>
+    <p>底部玻璃导航：4 个单色 SVG tab 浮在彩色内容上，向下滚过 140px 最小化（标签折叠），回滚或近顶弹性展开。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+
+  <div class="stage">
+    <div class="phone">
+      <div class="screen">
+        <!-- 内容层（永远不透明）：彩色照片 + 白卡，从玻璃 Tab 条下滚过 -->
+        <div class="scroll" id="sc">
+          <div class="lg-status"><span>9:41</span><span>ᯤ 🔋</span></div>
+
+          <div class="lg-photo">
+            <div class="lg-cap"><div class="lg-kicker">TODAY · 晨间</div><div class="lg-heading">山雾散在六点半</div></div>
+          </div>
+
+          <div class="lg-body">
+            <div class="lg-sect">今日状态</div>
+            <div class="lg-card">
+              <div class="lg-kicker">恢复指数</div>
+              <div class="lg-value">92</div>
+              <p>睡眠 7 小时 48 分，深睡占比 23%。身体已就绪，适合安排高强度间歇。</p>
+              <div class="lg-chips"><span>静息心率 58</span><span>HRV 64ms</span><span>压力低</span></div>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">本周概览</div>
+              <div class="lg-value">4 / 5</div>
+              <p>还差一次训练达成周目标。建议今晚进行 30 分钟的有氧。</p>
+            </div>
+          </div>
+
+          <div class="lg-photo lg-photo--sea">
+            <div class="lg-cap"><div class="lg-kicker">EVENING · 海线</div><div class="lg-heading">潮水在七点转青</div></div>
+          </div>
+
+          <div class="lg-body">
+            <div class="lg-sect">训练安排</div>
+            <div class="lg-card">
+              <div class="lg-kicker">训练计划</div>
+              <div class="lg-value">间歇 4×4</div>
+              <p>热身 10 分钟 → 4 组 4 分钟快跑，组间慢跑 3 分钟。完成后记得拉伸。</p>
+              <div class="lg-chips"><span>配速 4′50″</span><span>心率区间 4</span></div>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">饮食</div>
+              <div class="lg-value">1,640 kcal</div>
+              <p>蛋白质 98g / 130g。晚餐建议补一份高蛋白主食。</p>
+            </div>
+            <div class="lg-card">
+              <div class="lg-kicker">明日</div>
+              <div class="lg-value">恢复日</div>
+              <p>低强度活动即可，目标步数 8,000。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 控件层：唯一的玻璃区（滚动向下最小化、回滚展开） -->
+        <div class="lg-tabbar glass" id="tabbar">
+          <div class="lg-tab on">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11.2L12 3l9 8.2V21h-6v-6H9v6H3z"/></svg>
+            <span class="lg-lb">今天</span>
+          </div>
+          <div class="lg-tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.3 6.2-6.2 2.3 2.3-6.2z" fill="currentColor" stroke="none"/></svg>
+            <span class="lg-lb">探索</span>
+          </div>
+          <div class="lg-tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19V6a2 2 0 012-2h12v15H6a2 2 0 00-2 2z"/><path d="M8 8h6M8 12h6"/></svg>
+            <span class="lg-lb">记录</span>
+          </div>
+          <div class="lg-tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5c1.4-3.8 4.2-5.7 7.5-5.7s6.1 1.9 7.5 5.7"/></svg>
+            <span class="lg-lb">我的</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>两层纪律</b>：Tab 条是控件层，下面的照片与白卡全部不透明——玻璃的模糊/饱和来自背后内容。</li>
+        <li><b>最小化行为</b>：向下滚过 140px 收缩至 54px、标签折叠；回滚或近顶（&lt;80px）立即展开。尺寸/圆角走 <code>--spring</code>（spatial 回弹），透明度/颜色走 <code>--damped</code>（绝不回弹）。</li>
+        <li><b>active 反馈</b>：图标 <code>scale(1.12)</code> + 色彩加深（<code>--ios-ink2</code> → <code>--ios-ink</code>），其余保持单色。</li>
+        <li><b>胶囊比例</b>：高度 74 → 54 时圆角 32 → 27 同步跟随，外形不走样。</li>
+        <li><b>留边</b>：left/right 12、bottom 14，玻璃与机身边缘保持呼吸，不贴边。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li><b>向下滚</b> → Tab 条最小化；<b>往回滚</b> → 弹性展开（弹簧回弹一次）。</li>
+        <li><b>点 4 个 tab</b> → 切换 active（缩放 + 加深 + 保留 label）。</li>
+        <li><b>滚到第二张彩色照片</b> → 看玻璃颜色如何被背后内容改变。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>玻璃不上内容层、不给每个图标上色、标签不用 ALL-CAPS、不做彩色角标点缀。</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分段控件 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">ios-native</span><span class="tag alt">apple-design · mobile-ui-craft</span></div>
+    <h1>分段控件（segmented-control）</h1>
+    <p>iOS 分段控件：40pt 轨道 + 白色 thumb 带阴影滑动，选中 15/600 墨色、未选次级墨色。demo 三段「今日 / 书架 / 发现」，点击切换。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="ios-scroll">
+
+        <!-- HIG: 分段控件 —— 40pt 轨道圆角 10，白 thumb 在轨内滑动 -->
+        <div class="ios-seg" id="iosSeg">
+          <div class="ios-seg-thumb" id="iosThumb"></div>
+          <button class="ios-seg-btn">今日</button>
+          <button class="ios-seg-btn ios-dim">书架</button>
+          <button class="ios-seg-btn ios-dim">发现</button>
+        </div>
+
+        <p class="ios-seg-state">当前分段：<b id="iosSegNow">今日</b></p>
+
+        <!-- 占位内容：给分段一个可切换的内容语境 -->
+        <div class="ios-seg-card">
+          <div class="ios-seg-card-k">今日 · 精选</div>
+          <div class="ios-seg-card-t">在纸页与像素之间，我们如何重新学会停留</div>
+          <div class="ios-seg-card-m">6 分钟 · 心理</div>
+        </div>
+        <div class="ios-seg-card">
+          <div class="ios-seg-card-k">今日 · 新知</div>
+          <div class="ios-seg-card-t">重读《拾光》：一本关于停顿的书</div>
+          <div class="ios-seg-card-m">4 分钟 · 书评</div>
+        </div>
+
+      </div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>40pt 轨道</b>：<code>--ios-track</code>（6% 墨色）圆角 10、内衬 2px；白 thumb 带轻投影在轨内滑动。</li>
+        <li><b>两条动效语义</b>：位移走 <code>--ios-spring</code>（轻微回弹），文字色变化走 <code>--ios-damped</code>（临界阻尼不回弹）。</li>
+        <li><b>选中 15/600 ink、未选 ink2</b>：只靠字色分主次，不加下划线、不加描边。</li>
+        <li><b>thumb 位移</b>：<code>translateX(calc(N*(100% + 1.6px)))</code>，段数变化只需改 thumb 宽度。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>点三个分段：thumb 轻回弹滑动，文字色同步阻尼过渡。</li>
+        <li>连续快速点击：transition 只认最终值，不会叠成抖动。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>无 stock 蓝选中态、无下划线指示条——iOS 分段就是白块滑动。</li>
+        <li>无 backdrop-filter、无毛玻璃轨道。</li>
+        <li>轨道不加高对比描边：<code>--ios-track</code> 6% 墨色足够。</li>
+      </ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

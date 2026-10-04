@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实心 Tab 栏 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">ios-native</span><span class="tag alt">apple-design · mobile-ui-craft</span></div>
+    <h1>实心 Tab 栏（tab-bar-solid）</h1>
+    <p>iOS 底部 Tab 栏：84pt 高、近乎不透明的暖白实心底 + 顶部 .5px 发丝线，4 个 26px SVG tab，active 用赤陶强调色。0 个 backdrop-filter 是刻意的——非玻璃画法。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+
+      <div class="ios-scroll">
+        <div class="ios-tabs-title">今日阅读</div>
+        <div class="ios-tabs-sub">周三 · 已连续阅读 21 天</div>
+        <div class="ios-tabs-card">
+          <div class="ios-tabs-card-k">CHAPTER 12 · 在读</div>
+          <div class="ios-tabs-card-t">在纸页与像素之间，我们如何重新学会停留</div>
+          <div class="ios-tabs-card-m">64% · 还剩约 18 分钟</div>
+        </div>
+        <div class="ios-tabs-card">
+          <div class="ios-tabs-card-k">刚更新</div>
+          <div class="ios-tabs-card-t">周末书单：五本慢读</div>
+          <div class="ios-tabs-card-m">清单 · 5 分钟</div>
+        </div>
+        <div class="ios-tabs-card">
+          <div class="ios-tabs-card-k">专栏</div>
+          <div class="ios-tabs-card-t">字体、行距与眼睛的疲劳曲线</div>
+          <div class="ios-tabs-card-m">笔记 · 7 分钟</div>
+        </div>
+      </div>
+
+      <!-- Tab 栏：实心底 + 发丝线，刻意 0 个 backdrop-filter -->
+      <div class="ios-tabbar" id="iosTabs">
+        <div class="ios-tab ios-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 01-1 1h-5v-6h-4v6H5a1 1 0 01-1-1z"/></svg><span class="ios-tab-lb">今日</span></div>
+        <div class="ios-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h6a2 2 0 012 2v14a2 2 0 00-2-2H5z"/><path d="M19 4h-6a2 2 0 00-2 2v14a2 2 0 012-2h6z"/></svg><span class="ios-tab-lb">书架</span></div>
+        <div class="ios-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2.2 5.8L7 17l2.2-5.8z"/></svg><span class="ios-tab-lb">发现</span></div>
+        <div class="ios-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5c1.4-3.8 4.2-5.7 7.5-5.7s6.1 1.9 7.5 5.7"/></svg><span class="ios-tab-lb">我的</span></div>
+      </div>
+
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>84pt 实心底</b>：<code>rgba(251,247,239,.98)</code> 近乎全不透明的暖白 + 顶部 .5px 发丝线 <code>--ios-sep</code> 收边。</li>
+        <li><b>4 个 26px SVG tab</b>：active <code>--ios-accent</code>、未选 <code>#9A938A</code>，10px 标签字重 500。</li>
+        <li><b>只有颜色在动</b>：hover 与点击都走 <code>--ios-damped</code> 阻尼——颜色不回弹，图标不缩放。</li>
+        <li><b>0 个 backdrop-filter 是刻意的</b>：非玻璃时代用「实心 + 发丝线」，不是毛玻璃。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>点四个 tab 切换：观察只有颜色过渡，没有胶囊底、没有弹跳。</li>
+        <li>hover 未选中的 tab，同样是一条阻尼色彩过渡。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>无 backdrop-filter / 毛玻璃 Tab 栏——这条是刻意的，见上。</li>
+        <li>无 stock 蓝、无选中胶囊底、无 badge 红点。</li>
+        <li>active 不加缩放/回弹：HIG 的 tab 切换只换色。</li>
+      </ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

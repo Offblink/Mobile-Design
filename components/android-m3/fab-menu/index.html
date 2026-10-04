@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>浮动操作按钮菜单 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">android-m3</span><span class="tag alt">skill: material-3 · mobile-ui-craft</span></div>
+    <h1>浮动操作按钮菜单（fab-menu）</h1>
+    <p>FloatingActionButtonMenu：58px 的 FAB 用 Expressive 默认的 18px 圆角方块（不是圆），展开时旋转 135° 变圆并换成 on-primary-container 底，三个带文字标签的菜单项错峰弹出。demo 背景放两张列表卡当上下文。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="md3-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+      <div class="md3-scroll">
+        <h2 class="md3-h2">今日训练</h2>
+
+        <div class="md3-listcard">
+          <div class="md3-li"><span class="md3-ico">🏋️</span><div class="md3-litext"><div class="md3-lit1">深蹲 5×5</div><div class="md3-lit2">08:20 · 力量 · 已完成</div></div><span class="md3-liv">42′</span></div>
+          <div class="md3-li"><span class="md3-ico">🏃</span><div class="md3-litext"><div class="md3-lit1">晨跑 5 公里</div><div class="md3-lit2">07:05 · 有氧 · 配速 5′42″</div></div><span class="md3-liv">28′</span></div>
+          <div class="md3-li"><span class="md3-ico">🧘</span><div class="md3-litext"><div class="md3-lit1">拉伸放松</div><div class="md3-lit2">昨 21:40 · 柔韧 · 已完成</div></div><span class="md3-liv">12′</span></div>
+        </div>
+
+        <div class="md3-listcard">
+          <div class="md3-li"><span class="md3-ico">🥗</span><div class="md3-litext"><div class="md3-lit1">午餐打卡</div><div class="md3-lit2">12:30 · 蛋白 46g</div></div><span class="md3-liv">✓</span></div>
+          <div class="md3-li"><span class="md3-ico">💧</span><div class="md3-litext"><div class="md3-lit1">饮水 1.8L</div><div class="md3-lit2">目标 2.5L · 还差 700ml</div></div><span class="md3-liv">72%</span></div>
+        </div>
+      </div>
+
+      <!-- FAB 菜单（FloatingActionButtonMenu）-->
+      <div class="md3-fabwrap" id="fabwrap">
+        <div class="md3-fabitem"><span>扫码打卡</span><b>⌗</b></div>
+        <div class="md3-fabitem"><span>记录一组</span><b>＋</b></div>
+        <div class="md3-fabitem"><span>拍训练视频</span><b>▣</b></div>
+        <button class="md3-fab" id="fab" aria-label="展开操作菜单">＋</button>
+      </div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>圆角方块 FAB</b>：58×58、<code>border-radius:18px</code>——M3 Expressive 的默认形，不是圆形。</li>
+        <li><b>展开形变</b>：<code>.open</code> 时 FAB 旋转 135°（＋ 转成 × 的姿态）+ 圆角变 50% + 背景换 on-primary-container；形状走 <code>--spring</code>、颜色走 <code>--damped</code> 同帧联动。</li>
+        <li><b>错峰弹出</b>：三个菜单项 <code>transition-delay: .02/.08/.14s</code>，opacity 走 damped、位移缩放走 spring。</li>
+        <li>菜单项 = 文字胶囊 + 44px 次级图标块，替代堆叠的小 FAB。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>点右下角 <b>＋</b>：FAB 旋转变圆，三项由下往上错峰弹出。</li>
+        <li>再点一次收起；悬停 FAB 看 <code>scale(1.06)</code>（开合两态各自的 hover）。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>不做圆形 FAB、不做一排堆叠小 FAB、不做 BottomAppBar、菜单不做统一淡入（stagger 是关键）。</li></ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>连接式分段按钮 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">android-m3</span><span class="tag alt">skill: material-3 · mobile-ui-craft</span></div>
+    <h1>连接式分段按钮（button-group）</h1>
+    <p>M3 ButtonGroup（connected）：一条 outline-variant 胶囊外框把三个选项连成整体，选中项铺 secondary-container 底——替代 SegmentedButton 的圆角分段。demo 把它放进一张「统计周期」卡里，切换时下方数值跟着换。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="md3-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+      <div class="md3-scroll">
+        <div class="md3-card">
+          <div class="md3-cardhead">
+            <span class="md3-cardtitle">统计周期</span>
+            <span class="md3-cardhint">ButtonGroup · connected</span>
+          </div>
+
+          <div class="md3-bgroup" id="bg">
+            <button class="on">本周</button><button>本月</button><button>年度</button>
+          </div>
+
+          <div class="md3-stat">
+            <div class="md3-statnum" id="num">12,480</div>
+            <div class="md3-statlab" id="lab">本周总步数 · 日均 1,783</div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>一条外框</b>：容器 <code>border: 1px solid --m3-outline-variant</code> + <code>border-radius: 999px</code> + <code>overflow:hidden</code>，三个按钮共享一枚胶囊。</li>
+        <li><b>竖分隔线</b>：<code>button + button</code> 用 border-left 画出，外框由容器统一兜住，不会双线。</li>
+        <li><b>选中态</b>：secondary-container 底 + on-secondary-container 文字，颜色过渡走 <code>--damped</code>。</li>
+        <li><b>hover</b>：未选项 hover 铺 <code>--m3-sc</code> 底——M3 state layer 的容器级表达。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>切 <b>本周 / 本月 / 年度</b>，看选中底色滑过去、下方数值同步换。</li>
+        <li>在未选项上悬停，观察只出现一层 sc 底色。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>不做 SegmentedButton 的独立圆角分段、不给分段各自描边、不用 primary 一色到底。</li></ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

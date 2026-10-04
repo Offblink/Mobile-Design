@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大标题顶栏 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">ios-native</span><span class="tag alt">apple-design · mobile-ui-craft</span></div>
+    <h1>大标题顶栏（large-title-header）</h1>
+    <p>iOS 顶栏三件套：实心状态栏（9:41 + 信号/电量）+ 44pt 导航行（居中 17/600 标题、两侧赤陶动作、底部 .5px 发丝线）+ 34pt 大标题与 15pt 副标题，下方接一段占位内容看衔接。全程无 backdrop-filter。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+
+      <!-- 状态栏：实心暖底，非毛玻璃 -->
+      <div class="ios-status"><span>9:41</span><span class="ios-status-right">▮▮▮ ᯤ 🔋</span></div>
+
+      <!-- 导航行：实心 + 发丝线 —— 全程 0 个 backdrop-filter -->
+      <div class="ios-nav">
+        <span class="ios-side"><svg viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2L2 10l8 8"/></svg>书架</span>
+        <span class="ios-nav-title">拾光</span>
+        <span class="ios-side ios-side-r">编辑</span>
+      </div>
+
+      <div class="ios-scroll">
+        <!-- HIG Large Title：34/41 700 + 15pt 次级副标题 -->
+        <div class="ios-largetitle">今日阅读</div>
+        <div class="ios-largesub">周三 · 已连续阅读 21 天</div>
+
+        <!-- 占位内容：给顶栏一段真实滚动语境（衬线 Hero，非本组件规则） -->
+        <div class="ios-ph">
+          <div class="ios-ph-kick">CHAPTER 12 · 在读</div>
+          <h2>在纸页与像素之间，<br>我们如何重新学会停留</h2>
+          <div class="ios-ph-meta">64% · 还剩约 18 分钟</div>
+        </div>
+
+        <div class="ios-ph-item">
+          <div class="ios-ph-item-t">纸质书的触感经济学</div>
+          <div class="ios-ph-item-m">专栏 · 4 分钟</div>
+        </div>
+        <div class="ios-ph-item">
+          <div class="ios-ph-item-t">当我们谈论「读完」时在谈论什么</div>
+          <div class="ios-ph-item-m">长文 · 9 分钟</div>
+        </div>
+        <div class="ios-ph-item">
+          <div class="ios-ph-item-t">重读《拾光》第 3 章</div>
+          <div class="ios-ph-item-m">书摘 · 6 分钟</div>
+        </div>
+        <div class="ios-ph-item">
+          <div class="ios-ph-item-t">周末书单：五本慢读</div>
+          <div class="ios-ph-item-m">清单 · 5 分钟</div>
+        </div>
+        <div class="ios-ph-item">
+          <div class="ios-ph-item-t">字体、行距与眼睛的疲劳曲线</div>
+          <div class="ios-ph-item-m">笔记 · 7 分钟</div>
+        </div>
+        <div class="ios-ph-item">
+          <div class="ios-ph-item-t">像素里的旁注：我们为什么爱划线</div>
+          <div class="ios-ph-item-m">专栏 · 8 分钟</div>
+        </div>
+      </div>
+
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>HIG 大标题体系</b>：34/41 700 大标题 + 15pt <code>--ios-ink2</code> 副标题，下面直接进入内容流。</li>
+        <li><b>全栏实心</b>：状态栏与导航栏都是不透明 <code>--ios-bg</code>，只用 .5px 发丝线 <code>--ios-sep</code> 收边——整段 <b>0 个 backdrop-filter</b>。</li>
+        <li><b>居中 17/600 标题</b>：「拾光」居中，左侧 chevron+「书架」、右侧「编辑」共用唯一强调色 <code>--ios-accent</code>。</li>
+        <li><b>触控尺寸</b>：两侧动作区 min-width 64px，满足 ≥44pt。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>向下滚动，看大标题稳稳待在内容流顶部（基线画法：不吸顶、不折叠）。</li>
+        <li>数一数栏与栏之间的边界：只有发丝线，没有阴影、没有模糊。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never">
+        <li>无 backdrop-filter、无毛玻璃导航——非玻璃时代的 iOS 正确画法。</li>
+        <li>无 stock 蓝一色到底：彩色文字只有赤陶 <code>--ios-accent</code>。</li>
+        <li>大标题不做滚动折叠联动（collapse），保持静态 HIG 基线。</li>
+      </ul>
+    </aside>
+  </div>
+</body>
+</html>

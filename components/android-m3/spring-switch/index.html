@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>双弹簧开关 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">android-m3</span><span class="tag alt">skill: material-3 · mobile-ui-craft</span></div>
+    <h1>双弹簧开关（spring-switch）</h1>
+    <p>M3 开关：knob 位移与放大走 spatial spring（约 10% 回弹），轨道颜色走 effects spring（临界阻尼、绝不回弹）——同一控件里两种弹簧语义并存。demo 展示三行设置项，可逐个点开关观察差异。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="md3-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+      <div class="md3-scroll">
+        <h2 class="md3-h2">设置</h2>
+
+        <div class="md3-setrow">
+          <div class="md3-settext">
+            <div class="md3-t1">训练提醒</div>
+            <div class="md3-t2">knob = spatial spring · 轨道色 = effects spring（不回弹）</div>
+          </div>
+          <div class="md3-sw on" role="switch" aria-checked="true" tabindex="0"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M4 12.5l5.2 5.2L20 7"/></svg></i></div>
+        </div>
+
+        <div class="md3-setrow">
+          <div class="md3-settext">
+            <div class="md3-t1">动态取色</div>
+            <div class="md3-t2">Material You · 跟随壁纸的动态色板</div>
+          </div>
+          <div class="md3-sw" role="switch" aria-checked="false" tabindex="0"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M4 12.5l5.2 5.2L20 7"/></svg></i></div>
+        </div>
+
+        <div class="md3-setrow">
+          <div class="md3-settext">
+            <div class="md3-t1">深色主题</div>
+            <div class="md3-t2">点我对比：轨道变色瞬间无过冲，knob 甩到位有回弹</div>
+          </div>
+          <div class="md3-sw" role="switch" aria-checked="false" tabindex="0"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path d="M4 12.5l5.2 5.2L20 7"/></svg></i></div>
+        </div>
+      </div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>knob = spatial spring</b>：<code>transform</code>/<code>width</code>/<code>height</code> 用 <code>--spring</code>（cubic-bezier(.34,1.56,.64,1)），位移 20px、尺寸 24→28px，到位时约 10% 回弹。</li>
+        <li><b>轨道色 = effects spring</b>：<code>background</code>/<code>border-color</code> 用 <code>--damped</code>（临界阻尼），颜色绝不回弹——一控件双弹簧语义。</li>
+        <li>勾选图标显隐走 <code>opacity var(--damped)</code>，颜色类过渡同样不回弹。</li>
+        <li>尺寸变化让 knob 在轨道两端自然贴边（M3 state layer 之外的 shape-change）。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>逐个点开关，盯 knob 的<b>回弹</b>与轨道的<b>直落</b>——同一帧两种曲线。</li>
+        <li>连点几个开关，感受 spatial spring 的「甩」与 damped 的「稳」对比。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>没有单一曲线打天下（颜色不做回弹）、没有 tween 时长动画、没有 48dp 前的圆形 knob 贴边。</li></ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
