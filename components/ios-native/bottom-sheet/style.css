@@ -31,9 +31,12 @@
 .ios-veil.ios-show{opacity:1;pointer-events:auto}
 
 /* iOS: 白面板 14px 14px 0 0 圆角，translateY(110%) → 0 走 --ios-spring 弹起 */
+/* touch-action:none 必须：整层拖拽的起笔面，不设浏览器会在 touch 拖动时
+   发 pointercancel 腰斩手势（拖不动），抢走的手势还穿透滚背后页面 */
 .ios-sheet{
   position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:14px 14px 0 0;z-index:50;
   transform:translateY(110%);transition:transform .5s var(--ios-spring);padding:10px 20px 34px;
+  touch-action:none;
 }
 .ios-sheet.ios-show{transform:translateY(0)}
 /* HIG: grabber 36×5，弱提示可下拉关闭 */
