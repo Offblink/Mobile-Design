@@ -48,7 +48,7 @@
         <li><b>纯色遮罩</b>：<code>rgba(20,16,10,.32)</code> 只压暗、不模糊——整段 <b>0 个 backdrop-filter</b>。</li>
         <li><b>spring 弹起</b>：白面板 <code>14px 14px 0 0</code> 圆角，<code>translateY(110%) → 0</code> 走 <code>--ios-spring</code>；遮罩淡入走 <code>--ios-damped</code>。</li>
         <li><b>结构</b>：36×5 grabber + 20/700 标题 + 13pt 副标题 + 3 行 srow（.5px 发丝线分隔）+ tinted「打开章节」。</li>
-        <li><b>整层可拖</b>：面板任意处按住下滑跟手位移（日志滚动区内除外，区内滚动优先），拖动超 6px 进入拖拽态，松手超过面板 35% 或快速甩动即关闭，未过线 spring 回弹归位（pointer 事件 + setPointerCapture，拖拽态吞 click 防误触）。</li>
+        <li><b>整层可拖</b>：面板任意处按住下滑跟手位移（按钮/开关/日志滚动区不启动拖拽，各自职责优先），拖动超 10px 进入拖拽态，松手超过面板 35% 或快速甩动即关闭，未过线 spring 回弹归位（pointer 事件 + document 级兜底，拖拽态吞 click 防误触）。</li>
       </ul>
       <h2>动手点</h2>
       <ul>
