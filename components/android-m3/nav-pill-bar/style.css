@@ -42,3 +42,13 @@
 /* Expressive 规则：active 标签单独用 secondary 角色，不与图标同色 */
 .md3-lab{color:var(--m3-on-surface-variant);transition:color var(--damped)}
 .md3-navitem.on .md3-lab{color:var(--m3-secondary)}
+
+/* ---------- 页面层：tab 切页（与 pill 同步平移） ---------- */
+/* 不透明底是防残影的关键：过渡期新旧两页同框，透底会让旧页内容"透"出来 */
+/* z 序：.on(新页)=2 盖住 .leaving(旧页)=1；往回切时旧页同样被压在下面 */
+/* 状态条 z30、导航条 z35 都高于页面层，切页不会盖住它们 */
+.md3-page{position:absolute;inset:0;background:var(--m3-surface);visibility:hidden;z-index:1}
+.md3-page.on{visibility:visible;z-index:2}
+.md3-page.leaving{visibility:visible;z-index:1}
+/* 位移一律 spatial spring（约 10% 过冲）；reduced-motion 由 tokens.css 统一降级为瞬时 */
+.md3-page.entering,.md3-page.leaving{transition:transform .5s var(--spring)}

@@ -32,7 +32,7 @@ git clone <this-repo>
 | `button-group` | 连接式分段按钮（替代 SegmentedButton） |
 | `fab-menu` | 圆角方块 FAB 展开为弹簧菜单（替代堆叠小 FAB） |
 | `morph-loader` | 形状形变装载器（替代圆形 spinner） |
-| `nav-pill-bar` | 底部导航 + 弹射平移的胶囊指示器 |
+| `nav-pill-bar` | 底部导航 + 弹射平移的胶囊指示器 + 页面平移切页 |
 | `expressive-card` | Hero moment 卡片：形变 + 色移 + 强调字重同帧联动 |
 
 ### `components/ios-native/` — 6 个
