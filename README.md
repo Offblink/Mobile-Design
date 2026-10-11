@@ -1,15 +1,16 @@
 # mobile-design
 
-**三套移动端设计语言的纯静态组件库** —— Material 3 Expressive（Android）、iOS 原生 UI、iOS 26 Liquid Glass。
+**自家签名交互 + 三套移动端设计语言的纯静态组件库** —— Blinvo Design、Material 3 Expressive（Android）、iOS 原生 UI、iOS 26 Liquid Glass。
 
 纯 HTML/CSS/JS，**零构建、零依赖、无需服务器**：双击任意 `index.html` 就能在浏览器里看效果（`file://` 直接可用）。
 
-| Android · Material 3 Expressive | iOS · 原生（无玻璃） | iOS 26 · Liquid Glass |
-| :---: | :---: | :---: |
-| ![Android](docs/screenshots/android-m3.png) | ![iOS](docs/screenshots/ios-native.png) | ![Glass](docs/screenshots/liquid-glass.png) |
+| Blinvo Design | Android · Material 3 Expressive | iOS · 原生（无玻璃） | iOS 26 · Liquid Glass |
+| :---: | :---: | :---: | :---: |
+| ![Blinvo Design](docs/screenshots/blinvo-design.png) | ![Android](docs/screenshots/android-m3.png) | ![iOS](docs/screenshots/ios-native.png) | ![Glass](docs/screenshots/liquid-glass.png) |
 
-## 为什么是这三个
+## 为什么是这四个
 
+- **Blinvo Design**：自家签名交互，不从任何现成设计语言借来——整页缩放转场，以及二维相册 / 一维列表两版涂抹多选。
 - **Material 3 Expressive**：弹簧动效（spatial 回弹 / effects 临界阻尼双轨）、35 种形状、48 色角色、强调字重排版、新组件替换（ButtonGroup、FloatingActionButtonMenu、形状形变装载器）。
 - **iOS 原生**：HIG 骨架——大标题、inset grouped 列表、内嵌分隔线、实心栏 + 发丝线、单一强调色。刻意**全程 0 个 `backdrop-filter`**。
 - **Liquid Glass**：两层纪律（玻璃只属于浮在内容上的控件层，内容层永远不透明）、Regular/Clear 变体、35% 压暗层、scroll-edge 渐隐带、滚动最小化 Tab 条、Reduce Transparency 不透明回退。
@@ -24,7 +25,17 @@ git clone <this-repo>
 
 ## 组件清单
 
-### `components/android-m3/` — 7 个
+### `components/blinvo-design/` — 3 个
+
+自家签名交互，源自本机自有项目，不属于任何设计语言家族。
+
+| 组件 | 说明 |
+|---|---|
+| `zoom-transition` | 缩放展示：点缩略图/相册入口整页放大进入，返回缩回原格 |
+| `paint-select-grid` | 涂抹多选 · 相册网格：锚点到笔尖整段翻转，斜拖跨行全选 |
+| `paint-select-list` | 涂抹多选 · 列表：长按卡片进多选，折返换段 + 贴边自动滚动连选 |
+
+### `components/android-m3/` — 6 个
 
 | 组件 | 说明 |
 |---|---|
@@ -34,7 +45,6 @@ git clone <this-repo>
 | `morph-loader` | 形状形变装载器（替代圆形 spinner） |
 | `nav-pill-bar` | 底部导航 + 弹射平移的胶囊指示器 + 页面平移切页 |
 | `expressive-card` | Hero moment 卡片：形变 + 色移 + 强调字重同帧联动 |
-| `zoom-transition` | 整页缩放转场：点缩略图/相册入口放大进入，返回缩回原格 |
 
 ### `components/ios-native/` — 6 个
 
@@ -67,7 +77,8 @@ mobile-design/
 │   ├── frame.css              # demo 页舞台（手机外壳 + 说明栏）
 │   └── glass.css              # 玻璃基础类（Regular/Clear/35% 压暗/无障碍回退）
 ├── components/
-│   ├── android-m3/<name>/     # index.html + style.css (+ script.js)
+│   ├── blinvo-design/<name>/  # index.html + style.css (+ script.js)
+│   ├── android-m3/<name>/
 │   ├── ios-native/<name>/
 │   └── liquid-glass/<name>/
 └── docs/screenshots/
@@ -88,6 +99,14 @@ mobile-design/
 - [hamen/material-3-skill](https://github.com/hamen/material-3-skill)（MIT）— Material 3 token/组件/合规
 - [dickwu/apple-design-skill](https://github.com/dickwu/apple-design-skill) — Apple HIG 与 Liquid Glass 规则
 - [ivan-magda/mobile-design-skills](https://github.com/ivan-magda/mobile-design-skills)（MIT）— iOS 26 / M3 Expressive 生成工艺与反模式清单
+
+**Blinvo Design 不在上述来源里**——它不提取设计规则，而是把本机自有项目的交互原样移植成 Web：
+
+| 组件 | 源头 | 对应实现 |
+|---|---|---|
+| `zoom-transition` | [Offblink/Prism](https://github.com/Offblink/Prism) | `Ui.rectOnScreen` / `Ui.zoomIn` / `Ui.shrinkFinish` |
+| `paint-select-grid` | [Offblink/Prism](https://github.com/Offblink/Prism) | `PhotoAdapter.bindPaint` / `paintAt` |
+| `paint-select-list` | [Offblink/Spore-Mobile](https://github.com/Offblink/Spore-Mobile) | `assets/web/record.js` 长按进多选 / `paintTo` / 边界自动滚动 |
 
 ## License
 

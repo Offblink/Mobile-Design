@@ -1,0 +1,115 @@
+/* ============================================================
+   paint-select-list · 一维列表上的涂抹多选
+   出处：Offblink/Spore-Mobile —— assets/web/record.js + record.css + spore.css
+   调色与玻璃配方全部沿用 Spore-Mobile（--pink 家族 / Liquid Glass 顶栏底栏）
+   ============================================================ */
+:root{
+  --pink:#EC4899; --pink-dark:#DB2777; --pink-deep:#C2185B;
+  --pink-tint:#FFF0F7; --pink-tint2:#FFE3EF;
+  --danger-tint:#FFF1F4; --danger-text:#C81E45;
+  --ink:#14172A; --muted:#5A5F78; --muted3:#A3A8C2;
+  --line:#E6E8F2; --line4:#D6D9E8;
+  --surface:#FFFFFF; --bg:#F4F6FD; --chip:#F1F3FB;
+  --row-title:#2B2F4A; --row-hover:#F5F7FD;
+  --r16:16px;
+  --t-fast:.16s;
+}
+
+.phone{background:var(--bg)}
+
+/* 页面：顶栏与底栏浮在滚动内容之上（玻璃是「压在内容上的控件层」，内容从下缘滑过） */
+.ps-page{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+
+.ps-status{position:absolute;top:0;left:0;right:0;height:34px;z-index:50;pointer-events:none;
+  display:flex;justify-content:space-between;align-items:center;padding:0 20px;
+  font-size:12px;font-weight:700;color:var(--ink)}
+
+/* ---------- 顶栏：Liquid Glass（Spore-Mobile .topbar）---------- */
+.ps-top{position:absolute;top:0;left:0;right:0;z-index:10;
+  display:flex;align-items:center;gap:8px;padding:46px 10px 10px;
+  background:var(--glass-regular-bg);
+  -webkit-backdrop-filter:var(--glass-regular-filter);
+  backdrop-filter:var(--glass-regular-filter);
+  border-bottom:.5px solid rgba(20,23,42,.12);
+  box-shadow:var(--glass-hairline)}
+.ps-icon{flex:none;width:36px;height:36px;border:0;border-radius:10px;background:none;
+  font-size:24px;line-height:1;color:var(--muted);cursor:pointer}
+.ps-icon:active{background:var(--chip)}
+.ps-ptitle{flex:1;min-width:0;margin:0;text-align:center;
+  font-size:17px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 模式里筛选让位给「取消」（常态 display:none，进多选才现身） */
+.ps-selx{display:none;flex:none;border:0;background:none;padding:7px 12px;border-radius:999px;
+  font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.ps-selx:active{background:var(--chip)}
+.ps-page.sel .ps-selx{display:block}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .ps-top{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+}
+@media (prefers-reduced-transparency:reduce){
+  .ps-top{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+}
+
+/* ---------- 列表：卡片式行（Spore-Mobile .rrow）---------- */
+.ps-list{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;
+  padding:104px 14px 96px;   /* 顶栏浮层 + 底栏浮层让位，最后一行能滚到条上方 */
+  -webkit-user-select:none;user-select:none;touch-action:pan-y}
+.ps-list::-webkit-scrollbar{display:none}
+
+.ps-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r16);
+  padding:13px 12px;cursor:pointer;transition:background var(--t-fast)}
+.ps-row:active{background:var(--row-hover)}
+.ps-row.on{background:var(--pink-tint);border-color:var(--pink)}
+
+/* 单选框：34px 圆，平时不显示 —— 模式门槛由「显示」本身管；
+   touch-action:none 把滚动让给涂抹，卡片其余区域的拖动仍留给滚动。
+   勾用 ::after 画：正常态 color:transparent 藏着，选中翻白才现身 */
+.ps-ck{display:none;flex:none;width:34px;height:34px;margin-left:-3px;border-radius:50%;
+  border:2px solid var(--line4);background:var(--surface);color:transparent;
+  align-items:center;justify-content:center;touch-action:none;
+  transition:background var(--t-fast),border-color var(--t-fast)}
+.ps-ck::after{content:'✓';font-size:17px;line-height:1}
+.ps-page.sel .ps-ck{display:flex}
+.ps-page.sel .ps-row{cursor:crosshair}
+.ps-row.on .ps-ck{background:var(--pink);border-color:var(--pink);color:#fff}
+
+/* 标题与时间必须各自成行：子元素是 span（行内）会挤成一行 */
+.ps-col{flex:1;min-width:0}
+.ps-t{display:block;font-size:15px;font-weight:600;color:var(--row-title);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps-ts{display:block;margin-top:3px;font-size:12px;color:var(--muted3)}
+
+.ps-empty{padding:44px 16px;text-align:center;color:var(--muted3);font-size:13px;line-height:1.9}
+[hidden]{display:none!important}
+
+/* ---------- 批量底栏：玻璃浮条（Spore-Mobile .batchbar）---------- */
+.ps-batch{position:absolute;left:0;right:0;bottom:0;z-index:40;
+  display:flex;align-items:center;gap:8px;padding:10px 12px 14px;
+  background:var(--glass-regular-bg);
+  -webkit-backdrop-filter:var(--glass-regular-filter);
+  backdrop-filter:var(--glass-regular-filter);
+  border-top:.5px solid var(--glass-border);
+  box-shadow:var(--glass-hairline),0 -10px 34px rgba(30,30,60,.10)}
+.ps-bcount{flex:none;min-width:54px;font-size:13px;font-weight:700;color:var(--muted)}
+.ps-bbtn{flex:1;border:0;border-radius:999px;padding:10px 0;
+  font-size:13.5px;font-weight:600;background:var(--pink-tint);color:var(--pink-deep);
+  cursor:pointer;transition:background var(--t-fast)}
+.ps-bbtn:active{background:var(--pink-tint2)}
+.ps-danger{background:var(--danger-tint);color:var(--danger-text)}
+.ps-danger:active{background:#FFE4EA}
+.ps-bbtn:disabled{opacity:.4;pointer-events:none}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .ps-batch{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+}
+@media (prefers-reduced-transparency:reduce){
+  .ps-batch{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+}
+
+/* ---------- 提示条 ---------- */
+.ps-hint{position:absolute;left:50%;bottom:88px;z-index:60;
+  transform:translate(-50%,8px);opacity:0;pointer-events:none;
+  background:var(--ink);color:#fff;font-size:12.5px;padding:9px 16px;border-radius:999px;
+  white-space:nowrap;transition:opacity .18s var(--damped),transform .18s var(--damped)}
+.ps-hint.show{opacity:1;transform:translate(-50%,0)}

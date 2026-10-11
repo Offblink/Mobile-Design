@@ -1,0 +1,68 @@
+/* ============================================================
+   paint-select-grid · 二维相册上的涂抹多选
+   出处：Offblink/Prism —— PhotoAdapter.bindPaint / paintAt
+   调色：Prism 自家浅色板（bg/fg/line/muted/ch_r），与同章节 zoom-transition 同源
+   ============================================================ */
+
+.phone{background:#F6F6F7}
+
+/* 页面骨架：单页，竖列 = 顶栏 / 发丝线 / 自适应网格 / 底栏 */
+.ps-page{position:absolute;inset:0;display:flex;flex-direction:column;background:#F6F6F7}
+
+/* 状态栏（屏幕级，纯装饰） */
+.ps-status{position:absolute;top:0;left:0;right:0;height:34px;z-index:40;pointer-events:none;
+  display:flex;justify-content:space-between;align-items:center;padding:0 20px;
+  font-size:12px;font-weight:700;color:#141416}
+
+.ps-hair{height:1px;background:#E4E4E8;flex:none}
+
+/* ---------- 顶栏 ---------- */
+.ps-top{flex:none;position:relative;height:82px;padding:38px 18px 0;
+  display:flex;align-items:center;justify-content:space-between}
+.ps-title{position:absolute;left:50%;top:38px;transform:translateX(-50%);
+  font-size:12px;letter-spacing:.2em;color:#6E6E76;padding:14px 16px}
+.ps-tbtn{background:none;border:0;font:inherit;font-size:14px;color:#6E6E76;
+  padding:14px 4px;cursor:pointer;transition:color .18s var(--damped)}
+.ps-tbtn:hover{color:#141416}
+.ps-tbtn.right{color:#6750A4;font-weight:700}
+.ps-tbtn.right:hover{color:#4A3380}
+.ps-count{font-family:Consolas,monospace;font-size:12px;color:#141416;font-weight:700;padding:14px 4px}
+[hidden]{display:none!important}
+
+/* ---------- 网格 ---------- */
+.ps-grid{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;align-content:start;
+  -webkit-user-select:none;user-select:none;touch-action:pan-y}
+.ps-grid::-webkit-scrollbar{display:none}
+
+/* 照片格：方格无圆角（Prism item_photo 是 SquareFrameLayout + 方底）。
+   选择模式里把格子的 touch-action 关掉——手势起手前就生效，滚动才不会抢走涂抹 */
+.ps-cell{position:relative;aspect-ratio:1;padding:0;border:0;cursor:pointer;
+  background-image:var(--g);transition:filter var(--damped)}
+.ps-cell:hover{filter:brightness(1.06)}
+.ps-grid.sel .ps-cell{touch-action:none;cursor:crosshair}
+.ps-grid.sel .ps-cell:hover{filter:none}
+
+/* 选中态：压暗 30% + 内嵌 2px 描边（Prism select_overlay 的两层结构）。
+   只叠 background-image 与一层 ::after，不重排不重绘格子本身 */
+.ps-cell.on{background-image:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),var(--g)}
+.ps-cell.on::after{content:'';position:absolute;inset:3px;pointer-events:none;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.92)}
+
+/* 空态：全部删光时别留一片白（Prism gl_empty） */
+.ps-empty{position:absolute;left:0;right:0;top:82px;bottom:72px;
+  display:grid;place-items:center;font-size:13px;color:#6E6E76;pointer-events:none}
+[hidden]{display:none!important}
+
+/* ---------- 底栏 ---------- */
+.ps-bottom{flex:none;height:72px;display:flex;align-items:center;justify-content:flex-end;padding:0 18px}
+.ps-del{font:inherit;font-size:15px;font-weight:700;color:#E5484D;background:none;border:0;
+  padding:12px 20px;cursor:pointer;transition:opacity var(--damped)}
+.ps-del:disabled{opacity:.4;cursor:default}
+
+/* ---------- 模式提示条 ---------- */
+.ps-hint{position:absolute;left:50%;bottom:96px;z-index:50;
+  transform:translate(-50%,8px);opacity:0;pointer-events:none;
+  background:#141416;color:#F6F6F7;font-size:12.5px;padding:9px 16px;border-radius:999px;
+  white-space:nowrap;transition:opacity .18s var(--damped),transform .18s var(--damped)}
+.ps-hint.show{opacity:1;transform:translate(-50%,0)}
