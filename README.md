@@ -24,7 +24,7 @@ git clone <this-repo>
 
 ## 组件清单
 
-### `components/android-m3/` — 6 个
+### `components/android-m3/` — 7 个
 
 | 组件 | 说明 |
 |---|---|
@@ -34,6 +34,7 @@ git clone <this-repo>
 | `morph-loader` | 形状形变装载器（替代圆形 spinner） |
 | `nav-pill-bar` | 底部导航 + 弹射平移的胶囊指示器 + 页面平移切页 |
 | `expressive-card` | Hero moment 卡片：形变 + 色移 + 强调字重同帧联动 |
+| `zoom-transition` | 整页缩放转场：点缩略图/相册入口放大进入，返回缩回原格 |
 
 ### `components/ios-native/` — 6 个
 
@@ -76,7 +77,7 @@ mobile-design/
 
 ## 约定
 
-- **动效双轨**：位移/尺寸/形变走 `--spring`（约 10% 回弹）；颜色/透明度走 `--damped`（临界阻尼，绝不回弹）。
+- **动效双轨**：位移/尺寸/形变走 `--spring`（约 10% 回弹）；颜色/透明度走 `--damped`（临界阻尼，绝不回弹）。**唯一例外**：页面级转场 `zoom-transition` 走 `fast_out_slow_in`（进 280ms / 出 240ms）——整页缩放回弹越过 100% 再回落读起来像故障。
 - **无障碍**：`shared/tokens.css` 内置 `prefers-reduced-motion` 降级；Liquid Glass 组件支持 `body.reduce-transparency` 不透明回退。
 - **file:// 安全**：不用 ES modules、不用 `fetch`、不引 CDN——所以没有服务器也能跑。
 

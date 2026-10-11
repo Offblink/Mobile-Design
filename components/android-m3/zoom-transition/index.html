@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>缩放转场 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">android-m3</span><span class="tag alt">source: Offblink/Prism · Ui.zoomIn / shrinkFinish</span></div>
+    <h1>缩放转场（zoom-transition）</h1>
+    <p>容器变形（Container Transform）的整页版：点缩略图，新页从该元素的屏幕矩形放大到全屏；返回时整页缩回那个矩形再收场。Prism 里两处都用它——相机页点左下角相册方块进入相册、相册点任意照片进入看图页。起始态是<b>非等比</b> scale（scaleX/scaleY 各自按矩形宽高算），整页精确填满源矩形、不裁不补；进场 280ms、退场 240ms，曲线 fast_out_slow_in。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+
+      <!-- ========== 页 1 · 相机 ========== -->
+      <section class="zpage z-cam on" id="p-cam">
+        <div class="z-viewfinder">
+          <div class="z-scene"></div>
+          <div class="z-thirds"></div>
+        </div>
+
+        <!-- 顶栏：拍摄 / 调色 模式切换 + 2px 指示条 -->
+        <div class="z-camtop">
+          <span class="z-mode on">拍摄</span>
+          <span class="z-mode">调色</span>
+        </div>
+
+        <!-- 底栏：相册入口（缩放源）· 快门 · 右侧等宽占位保证快门居中 -->
+        <div class="z-cambottom">
+          <button class="z-album" id="albumBtn" aria-label="打开相册"><span class="z-album-img"></span></button>
+          <span class="z-sp"></span>
+          <div class="z-shutter" role="button" aria-label="快门" tabindex="-1"><span></span></div>
+          <span class="z-sp"></span>
+          <span class="z-sp2"></span>
+        </div>
+      </section>
+
+      <!-- ========== 页 2 · 相册 ========== -->
+      <section class="zpage z-gal" id="p-gal">
+        <div class="z-galtop">
+          <button class="z-back" id="galBack">‹ 返回</button>
+          <span class="z-galtitle">相册</span>
+          <span class="z-count">18 张</span>
+        </div>
+        <div class="z-hair"></div>
+
+        <div class="z-grid" id="grid">
+          <button class="z-cell" aria-label="照片 1" style="--g:linear-gradient(135deg,#FF9A6C,#FF5E7E 55%,#7A3FF2)"></button>
+          <button class="z-cell" aria-label="照片 2" style="--g:linear-gradient(160deg,#7FD8FF,#3A7BFF 60%,#1B2A6B)"></button>
+          <button class="z-cell" aria-label="照片 3" style="--g:radial-gradient(circle at 30% 25%,#FFE29A,#FF8A5B 45%,#C73866)"></button>
+          <button class="z-cell" aria-label="照片 4" style="--g:linear-gradient(200deg,#0F2027,#2C5364 50%,#78FFD6)"></button>
+          <button class="z-cell" aria-label="照片 5" style="--g:linear-gradient(120deg,#FDBB2D,#22C1C3)"></button>
+          <button class="z-cell" aria-label="照片 6" style="--g:linear-gradient(150deg,#F953C6,#B91D73)"></button>
+          <button class="z-cell" aria-label="照片 7" style="--g:radial-gradient(circle at 70% 80%,#A8FF78,#38A700)"></button>
+          <button class="z-cell" aria-label="照片 8" style="--g:linear-gradient(135deg,#4B6CB7,#182848)"></button>
+          <button class="z-cell" aria-label="照片 9" style="--g:linear-gradient(180deg,#FDEB71,#F7B733 55%,#FC4A1A)"></button>
+          <button class="z-cell" aria-label="照片 10" style="--g:radial-gradient(circle at 50% 40%,#C9A7FF,#5B2E9E 60%,#1A0B33)"></button>
+          <button class="z-cell" aria-label="照片 11" style="--g:linear-gradient(135deg,#E0E0E0,#8E9EAB 45%,#2C3E50)"></button>
+          <button class="z-cell" aria-label="照片 12" style="--g:linear-gradient(145deg,#FF6A88,#FF99AC 40%,#FFD3A5)"></button>
+          <button class="z-cell" aria-label="照片 13" style="--g:radial-gradient(circle at 40% 30%,#8EC5FC,#4A7BD0 55%,#16265E)"></button>
+          <button class="z-cell" aria-label="照片 14" style="--g:linear-gradient(160deg,#F6D365,#FDA085)"></button>
+          <button class="z-cell" aria-label="照片 15" style="--g:linear-gradient(210deg,#30CFD0,#330867)"></button>
+          <button class="z-cell" aria-label="照片 16" style="--g:radial-gradient(circle at 25% 75%,#FFD3A5,#FF8D5A 40%,#B03A5B)"></button>
+          <button class="z-cell" aria-label="照片 17" style="--g:linear-gradient(135deg,#0F3443,#34E89E 60%,#D8F5A2)"></button>
+          <button class="z-cell" aria-label="照片 18" style="--g:linear-gradient(155deg,#2B1055,#7597DE 70%,#E6EEFF)"></button>
+        </div>
+
+        <div class="z-hair"></div>
+        <div class="z-galbottom"><span class="z-del">删除</span></div>
+      </section>
+
+      <!-- ========== 页 3 · 看图 ========== -->
+      <section class="zpage z-ed" id="p-ed">
+        <div class="z-edtop">
+          <button class="z-back z-back-light" id="edBack">‹ 返回</button>
+          <span class="z-edname">IMG_20261011_094123</span>
+          <span class="z-edmeta">12.4 MP</span>
+        </div>
+        <div class="z-hair z-hair-d"></div>
+
+        <div class="z-edbody">
+          <div class="z-photo" id="edPhoto"></div>
+          <div class="z-caption">2026-10-11 09:41 · f/1.8 · ISO 64</div>
+        </div>
+
+        <div class="z-edbottom"><button class="z-save">保存</button></div>
+      </section>
+
+      <!-- 状态栏：屏幕级单根，不跟着页面缩放（Android 系统栏是系统画的，不参与转场）。
+           颜色由 script.js 按「谁盖住顶栏区」翻。 -->
+      <div class="z-status" id="status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>源矩形</b>：点谁就量谁——<code>getBoundingClientRect()</code> 相对屏幕算出 <code>[x,y,w,h]</code>（Prism 对应 <code>Ui.rectOnScreen</code>），进退场都复用同一份。</li>
+        <li><b>起点变换</b>：<code>transform-origin:0 0</code> + <code>translate(x,y) scale(w/W, h/H)</code>。宽高<b>分开算</b>，所以起始态是压扁的——整页精确铺满那个 46px 方块 / 照片格，不裁边不留缝；结束前就恢复到 1:1，中途的形变正是「容器变形」的观感。</li>
+        <li><b>旧页不卸载</b>：Prism 在 Android 上要先 <code>PixelCopy</code> 截整帧当新 Activity 的窗口背景（否则源矩形之外露出黑底）；网页里旧页本来就压在下面，留着 <code>.on</code> 即可，效果等价且省掉一次截图。</li>
+        <li><b>状态栏不缩放</b>：单根挂在 <code>.screen</code> 上（Android 系统栏由 SystemUI 画，不进 Activity 的视图树）。进场时源页还盖着顶栏 → 走到终点才翻色；退场时新页顶边一动就露出下面那页 → 开场即翻。</li>
+        <li><b>时长与曲线</b>：进 <code>280ms</code> / 出 <code>240ms</code>（退场故意快 40ms），<code>fast_out_slow_in</code> = <code>cubic-bezier(.4,0,.2,1)</code>。</li>
+        <li><b>两段守卫</b>：转场期间 <code>busy</code> 拦掉所有点击；<code>transitionend</code> 之外再挂一个超时兜底（事件被更高优先级的样式改写吞掉时不卡死）。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li>相机页点<b>左下角相册方块</b> → 整页从那 46px 里长出来，状态栏全程只有 9:41 一根。</li>
+        <li>相册里点<b>任意一格</b> → 看图页从该格放大；页内照片会换成你点的那张。</li>
+        <li>返回 → 整页<b>缩回原格</b>再消失，露出下面那页；连着走 相机 → 相册 → 看图 → 返回 → 返回 看层级回退对不对。</li>
+        <li>动画中途快速连点：转场中不接新点击，页面不会卡在半路。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>不做淡入淡出替代缩放、不做等比 FIT（源比屏幕扁时会留黑边或裁切）、页面级转场不加 <code>--spring</code> 回弹（整页越过 100% 再回落读起来像故障——这是本库动效双轨的唯一例外）。</li></ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
