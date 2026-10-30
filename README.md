@@ -56,6 +56,14 @@ git clone <this-repo>
 | `clear-variant-bar` | 压在照片上的 Clear 玻璃 + 35% 压暗层 |
 | `scroll-edge` | 内容撞向玻璃条时的渐隐带 |
 
+## Agent Skills（实现配方）
+
+`skills/` 放可直接交给编码 Agent 的落地配方：不是静态组件，不进 `index.html` 画廊，但和组件共用同一套 token 与动效纪律。
+
+| Skill | 内容 |
+|---|---|
+| [`android-letter-directory`](skills/android-letter-directory/SKILL.md) | 通讯录式 A–Z/# 分组列表 + 27 槽字母索引 + 吸顶字母条 + 可编辑详情表格；含 M3 尺寸/颜色/动效规格、REST 契约、实现骨架、7 个实测坑与验收清单 |
+
 ## 项目结构
 
 ```
@@ -69,6 +77,9 @@ mobile-design/
 │   ├── android-m3/<name>/     # index.html + style.css (+ script.js)
 │   ├── ios-native/<name>/
 │   └── liquid-glass/<name>/
+├── skills/
+│   └── android-letter-directory/
+│       └── SKILL.md           # 通讯录式列表 + 可编辑表格的 Agent 实现配方
 └── docs/screenshots/
 ```
 
