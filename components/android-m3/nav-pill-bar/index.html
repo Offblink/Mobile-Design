@@ -12,12 +12,15 @@
   <div class="demo-head">
     <div class="tags"><span class="tag">android-m3</span><span class="tag alt">skill: material-3 · mobile-ui-craft</span></div>
     <h1>胶囊指示器导航条（nav-pill-bar）</h1>
-    <p>底部导航：surface-container 底、26px 圆角、absolute bottom，4 个 SVG 项共享一枚 secondary-container 胶囊指示器——点击时 translateX 用 --spring 弹射平移，active 图标用 on-surface、标签用 secondary 角色。demo 上方放几张可滚动的内容卡。</p>
+    <p>底部导航：surface-container 底、26px 圆角、absolute bottom，4 个 SVG 项共享一枚 secondary-container 胶囊指示器——点击时 translateX 用 --spring 弹射平移，active 图标用 on-surface、标签用 secondary 角色。点 tab 时内容页同步平移切页：新页从侧边滑入盖住旧页（不透明底防残影），旧页反向滑出后隐藏。</p>
     <a class="home" href="../../../index.html">← 返回组件总览</a>
   </div>
   <div class="stage">
     <div class="phone"><div class="screen">
       <div class="md3-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+
+      <!-- 页面层：每 tab 一页，切页平移（不透明底 + .on 盖旧页，防残影/层序倒挂） -->
+      <section class="md3-page on">
       <div class="md3-scroll">
         <div class="md3-appbar">
           <div class="md3-avatar"></div>
@@ -31,6 +34,51 @@
         <div class="md3-contentcard"><span class="md3-cc-n">睡眠时长</span><span class="md3-cc-v">7h 24m</span></div>
         <div class="md3-contentcard md3-contentcard-alt"><span class="md3-cc-n">本周训练</span><span class="md3-cc-v">4 次</span></div>
       </div>
+      </section>
+
+      <section class="md3-page">
+      <div class="md3-scroll">
+        <div class="md3-appbar">
+          <div class="md3-avatar"></div>
+          <div class="md3-hi"><div class="md3-l1">训练计划</div><div class="md3-l2">今日：上肢推</div></div>
+          <div class="md3-iconbtn">📅</div>
+        </div>
+
+        <div class="md3-contentcard md3-contentcard-alt"><span class="md3-cc-n">卧推</span><span class="md3-cc-v">4×8</span></div>
+        <div class="md3-contentcard"><span class="md3-cc-n">肩推</span><span class="md3-cc-v">3×10</span></div>
+        <div class="md3-contentcard"><span class="md3-cc-n">绳索下压</span><span class="md3-cc-v">3×12</span></div>
+        <div class="md3-contentcard md3-contentcard-alt"><span class="md3-cc-n">组间休息</span><span class="md3-cc-v">90s</span></div>
+      </div>
+      </section>
+
+      <section class="md3-page">
+      <div class="md3-scroll">
+        <div class="md3-appbar">
+          <div class="md3-avatar"></div>
+          <div class="md3-hi"><div class="md3-l1">近 7 天</div><div class="md3-l2">数据总览</div></div>
+          <div class="md3-iconbtn">📊</div>
+        </div>
+
+        <div class="md3-contentcard"><span class="md3-cc-n">日均步数</span><span class="md3-cc-v">10,204</span></div>
+        <div class="md3-contentcard"><span class="md3-cc-n">周消耗</span><span class="md3-cc-v">2,340 kcal</span></div>
+        <div class="md3-contentcard md3-contentcard-alt"><span class="md3-cc-n">平均睡眠</span><span class="md3-cc-v">7h 06m</span></div>
+        <div class="md3-contentcard"><span class="md3-cc-n">静息心率趋势</span><span class="md3-cc-v">-2 bpm</span></div>
+      </div>
+      </section>
+
+      <section class="md3-page">
+      <div class="md3-scroll">
+        <div class="md3-appbar">
+          <div class="md3-avatar"></div>
+          <div class="md3-hi"><div class="md3-l1">Lv.12</div><div class="md3-l2">周予</div></div>
+          <div class="md3-iconbtn">⚙️</div>
+        </div>
+
+        <div class="md3-contentcard md3-contentcard-alt"><span class="md3-cc-n">徽章</span><span class="md3-cc-v">18 枚</span></div>
+        <div class="md3-contentcard"><span class="md3-cc-n">好友</span><span class="md3-cc-v">32 人</span></div>
+        <div class="md3-contentcard"><span class="md3-cc-n">加入天数</span><span class="md3-cc-v">214 天</span></div>
+      </div>
+      </section>
 
       <!-- 导航栏：胶囊指示器 + active 标签 secondary 色 -->
       <nav class="md3-navbar" id="nav">
@@ -59,15 +107,18 @@
         <li><b>容器</b>：<code>--m3-sc</code> 底、圆角 26px、<code>left/right 12px + absolute bottom</code>，浮在滚动内容之上（z-index 层级 + 柔和阴影）。</li>
         <li><b>胶囊指示器</b>：72×32 的 secondary-container 绝对定位层，点击时 JS 算出目标项中心再 <code>translateX</code>，过渡曲线 <code>--spring</code>——弹射平移带过冲。</li>
         <li><b>active 双角色</b>：图标随 <code>color</code> 变 on-surface（damped），<b>标签</b>单独染成 <code>--m3-secondary</code>——Expressive 的「图标与标签不同色」规则。</li>
+        <li><b>切页两防线</b>：页面层必须<b>不透明底</b>（过渡期两页同框，透底会让旧页"透"出来成残影）；新页 <code>.on</code> 的 z 序必须盖住旧页 <code>.leaving</code>（往回切时旧页声明在后会倒挂）。状态条 z30、导航条 z35 高于页面层，切页盖不住。</li>
         <li>非 active 项图标/标签为 on-surface-variant，滚动内容可一直延伸到导航条底下。</li>
       </ul>
       <h2>动手点</h2>
       <ul>
-        <li>点四个 tab：胶囊<b>弹射</b>到目标项（注意过冲回位），标签与图标分色切换。</li>
+        <li>点四个 tab：胶囊<b>弹射</b>到目标项（注意过冲回位），标签与图标分色切换，内容页同步侧滑切页。</li>
+        <li>来回点（首页↔我的）：观察往回切时旧页仍被压在下面，没有残影。</li>
+        <li>快速连点多个 tab：切页轮次守卫（turn）接管，页面不会卡在半路。</li>
         <li>先滚动内容卡再点导航，看导航条悬浮不随内容动。</li>
       </ul>
       <h2>刻意没做</h2>
-      <ul class="never"><li>不做 BottomAppBar、不用指示器淡入淡出代替平移、active 标签不用 on-surface 一色到底。</li></ul>
+      <ul class="never"><li>不做 BottomAppBar、不用指示器淡入淡出代替平移、active 标签不用 on-surface 一色到底、切页不做淡出叠化（位移一律走 spring，颜色才走 damped）。</li></ul>
     </aside>
   </div>
   <script src="script.js"></script>

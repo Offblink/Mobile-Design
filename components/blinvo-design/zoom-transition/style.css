@@ -1,0 +1,153 @@
+/* ============================================================
+   zoom-transition · M3 整页缩放转场（Container Transform）
+   出处：Offblink/Prism —— Ui.rectOnScreen / Ui.zoomIn / Ui.shrinkFinish
+   ============================================================ */
+
+/* 转场参数：Prism 的两个时长 + Android fast_out_slow_in。
+   这三条是本组件对外的全部动效契约，拷走即用。 */
+:root{
+  --zoom-in:280ms;                     /* 进场（Ui.zoomIn .setDuration(280)） */
+  --zoom-out:240ms;                    /* 退场（Ui.shrinkFinish，比进场快 40ms） */
+  --zoom-ease:cubic-bezier(.4,0,.2,1); /* Android interpolator fast_out_slow_in */
+}
+
+/* M3 demo 舞台：相机页压暗，其余页用浅底 */
+.phone{background:#0E0E12}
+
+/* ---------- 页面层 ----------
+   display 只管显隐、底色只管不透明；translate/scale 全部由 script.js 内联写入，
+   两套职责不交叉，否则 CSS 里的 transform 会盖掉动画的 from/to。 */
+.zpage{position:absolute;inset:0;display:none;overflow:hidden;transform-origin:0 0}
+.zpage.on{display:block}
+/* 相册用竖列（顶栏 / 发丝线 / 自适应网格 / 底栏），.on 才切 flex */
+.z-gal.on{display:flex;flex-direction:column}
+.z-ed.on{display:flex;flex-direction:column}
+
+/* 状态栏：屏幕级单根，不进任何 .zpage —— 缩放时它不跟着动（Android 系统栏由 SystemUI
+   画、不在 Activity 视图树里），也就不会出现两根 9:41。颜色由 script.js 按盖住顶栏的
+   那页翻，走 damped 短过渡避免硬跳。 */
+.z-status{position:absolute;top:0;left:0;right:0;height:34px;z-index:40;pointer-events:none;
+  display:flex;justify-content:space-between;align-items:center;padding:0 20px;
+  font-size:12px;font-weight:700;color:var(--z-fg,#F4F4F6);
+  transition:color .18s var(--damped)}
+
+/* 发丝线（Prism 的 @color/line） */
+.z-hair{height:1px;background:#E4E4E8;flex:none}
+.z-hair-d{background:rgba(255,255,255,.10)}
+
+/* 文字按钮：‹ 返回 —— 三页共用，看图页换浅色 */
+.z-back{background:none;border:0;font:inherit;font-size:14px;color:#6E6E76;
+  padding:12px 18px 12px 4px;cursor:pointer;letter-spacing:.02em}
+.z-back:hover{color:#141416}
+.z-back-light{color:#9A9AA6}
+.z-back-light:hover{color:#F4F4F6}
+
+/* ============================================================
+   页 1 · 相机
+   ============================================================ */
+.z-cam{background:#0E0E12;--z-fg:#F4F4F6}
+
+.z-viewfinder{position:absolute;inset:0}
+/* 取景场景：日落渐变 + 山脊剪影（纯 CSS，file:// 可用） */
+.z-scene{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 62% 56%,#FFEFC8 0 3.4%,rgba(255,239,200,0) 3.8%),
+    radial-gradient(120% 70% at 62% 60%,rgba(255,214,150,.45) 0 22%,rgba(255,214,150,0) 55%),
+    linear-gradient(180deg,#241B3A 0%,#4A2E52 34%,#8E4A5C 58%,#DE8558 82%,#F2B275 100%);
+}
+.z-scene::after{
+  content:'';position:absolute;left:-6%;right:-6%;bottom:0;height:36%;
+  background:linear-gradient(180deg,#161A29,#0A0C14);
+  clip-path:polygon(0 64%,13% 33%,25% 55%,39% 20%,54% 47%,67% 28%,81% 51%,100% 36%,100% 100%,0 100%);
+}
+/* 三分线 */
+.z-thirds{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(to right,rgba(255,255,255,.20) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(255,255,255,.20) 1px,transparent 1px);
+  background-size:33.333% 100%,100% 33.333%;
+}
+
+/* 顶栏：两个模式 + active 下方 18×2 指示条 */
+.z-camtop{position:absolute;top:0;left:0;right:0;padding-top:44px;
+  display:flex;justify-content:center;gap:6px}
+.z-mode{position:relative;font-size:15px;font-weight:700;letter-spacing:.06em;
+  color:rgba(244,244,246,.55);padding:0 16px 10px}
+.z-mode.on{color:#F4F4F6}
+.z-mode.on::after{content:'';position:absolute;left:50%;bottom:0;
+  width:18px;height:2px;margin-left:-9px;background:#F4F4F6}
+
+/* 底栏：46 相册 · flex 占位 · 74 快门 · flex 占位 · 46 占位（快门因此居中） */
+.z-cambottom{position:absolute;left:0;right:0;bottom:0;height:150px;
+  display:flex;align-items:center;padding:0 34px}
+.z-sp{flex:1}
+.z-sp2{width:46px;height:46px;flex:none}
+
+/* 相册入口 = 缩放源：46×46、14px 圆角、1px 描边（Prism frame_14）。
+   缩放源的 hover/active 只换亮度不缩放——一旦改几何，量到的矩形就不是它的真实位置，
+   进场起点和退场落点会各差一截。 */
+.z-album{width:46px;height:46px;flex:none;padding:0;overflow:hidden;cursor:pointer;
+  border:1px solid rgba(255,255,255,.42);border-radius:14px;background:#fff;
+  transition:filter var(--damped)}
+.z-album:hover{filter:brightness(1.12)}
+.z-album:active{filter:brightness(.85)}
+.z-album-img{display:block;width:100%;height:100%;
+  background:linear-gradient(135deg,#FF9A6C,#FF5E7E 55%,#7A3FF2)}
+
+/* 快门：2px 空心环 + 58px 内盘（浅色前景 = Prism 的 fg_dark 口径） */
+.z-shutter{width:74px;height:74px;flex:none;border-radius:50%;
+  border:2px solid #F4F4F6;display:grid;place-items:center;cursor:pointer;
+  transition:transform var(--spring)}
+.z-shutter:active{transform:scale(.92)}
+.z-shutter span{width:58px;height:58px;border-radius:50%;background:#F4F4F6}
+
+/* ============================================================
+   页 2 · 相册
+   ============================================================ */
+.z-gal{background:#F6F6F7;--z-fg:#141416}
+
+.z-galtop{flex:none;position:relative;height:76px;padding:38px 18px 0;
+  display:flex;align-items:center;justify-content:space-between}
+/* 中间标题：Prism 给的是 letterSpacing 0.2 的「相册」下拉开关 */
+.z-galtitle{position:absolute;left:50%;top:38px;transform:translateX(-50%);
+  font-size:12px;letter-spacing:.2em;color:#6E6E76;padding:14px 16px}
+.z-count{font-family:Consolas,monospace;font-size:12px;color:#6E6E76}
+
+/* 3 列网格：Prism 的 GridLayoutManager(3) + 3dp 内外边距 */
+.z-grid{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;align-content:start}
+.z-grid::-webkit-scrollbar{display:none}
+/* 同 .z-album：照片格是缩放源，反馈只走亮度不走几何 */
+.z-cell{aspect-ratio:1;padding:0;border:0;cursor:pointer;background:var(--g);
+  transition:filter var(--damped)}
+.z-cell:hover{filter:brightness(1.1)}
+.z-cell:active{filter:brightness(.82)}
+
+.z-galbottom{flex:none;height:72px;display:flex;align-items:center;
+  justify-content:flex-end;padding:0 18px}
+.z-del{font-size:15px;font-weight:700;color:#E5484D;opacity:.4;padding:12px 20px}
+
+/* ============================================================
+   页 3 · 看图
+   ============================================================ */
+.z-ed{background:#0F0F13;--z-fg:#F4F4F6}
+
+.z-edtop{flex:none;position:relative;height:76px;padding:38px 18px 0;
+  display:flex;align-items:center;justify-content:space-between}
+.z-edname{position:absolute;left:50%;top:38px;transform:translateX(-50%);
+  font-family:Consolas,monospace;font-size:12px;color:#9A9AA6;white-space:nowrap}
+.z-edmeta{font-family:Consolas,monospace;font-size:12px;color:#9A9AA6}
+
+.z-edbody{flex:1;min-height:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:14px;padding:16px 0}
+.z-photo{width:100%;aspect-ratio:1;background:var(--g)}
+.z-caption{font-family:Consolas,monospace;font-size:11.5px;color:#7D7D8F}
+
+.z-edbottom{flex:none;height:76px;display:flex;align-items:center;justify-content:center}
+.z-save{font:inherit;font-size:14px;font-weight:700;color:#0F0F13;background:#F4F4F6;
+  border:0;border-radius:999px;height:44px;padding:0 34px;cursor:pointer;
+  transition:transform var(--spring),box-shadow var(--damped)}
+.z-save:hover{transform:scale(1.05);box-shadow:0 6px 18px rgba(244,244,246,.22)}
+.z-save:active{transform:scale(.96)}

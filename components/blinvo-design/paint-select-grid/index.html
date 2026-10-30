@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>涂抹多选 · 相册网格 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">blinvo-design</span><span class="tag alt">source: Offblink/Prism · PhotoAdapter.bindPaint</span></div>
+    <h1>涂抹多选 · 相册网格（paint-select-grid）</h1>
+    <p>二维网格上的涂抹多选：<b>长按</b>任意照片进选择模式，此后<b>按住拖动 = 范围选择</b>。关键在于语义不跟几何走——起笔那格是<b>锚点</b>，锚点到笔尖所在格之间的整段按本笔方向翻转，所以斜着从左上拖到右下 = 起点到终点全选，不管手指实际压没压到中间那些格子。起笔落在已选图上 = 这笔取消；收笔后甩出区间的自动撤销。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="ps-page">
+
+        <div class="ps-top">
+          <button class="ps-tbtn" id="cancelBtn" hidden>取消</button>
+          <span class="ps-title">相册</span>
+          <button class="ps-tbtn right" id="selBtn">选择</button>
+          <span class="ps-count" id="count" hidden>已选 0</span>
+        </div>
+        <div class="ps-hair"></div>
+
+        <div class="ps-grid" id="grid">
+          <button class="ps-cell" style="--g:linear-gradient(135deg,#FF9A6C,#FF5E7E 55%,#7A3FF2)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(160deg,#7FD8FF,#3A7BFF 60%,#1B2A6B)"></button>
+          <button class="ps-cell" style="--g:radial-gradient(circle at 30% 25%,#FFE29A,#FF8A5B 45%,#C73866)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(200deg,#0F2027,#2C5364 50%,#78FFD6)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(120deg,#FDBB2D,#22C1C3)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(150deg,#F953C6,#B91D73)"></button>
+          <button class="ps-cell" style="--g:radial-gradient(circle at 70% 80%,#A8FF78,#38A700)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(135deg,#4B6CB7,#182848)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(180deg,#FDEB71,#F7B733 55%,#FC4A1A)"></button>
+          <button class="ps-cell" style="--g:radial-gradient(circle at 50% 40%,#C9A7FF,#5B2E9E 60%,#1A0B33)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(135deg,#E0E0E0,#8E9EAB 45%,#2C3E50)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(145deg,#FF6A88,#FF99AC 40%,#FFD3A5)"></button>
+          <button class="ps-cell" style="--g:radial-gradient(circle at 40% 30%,#8EC5FC,#4A7BD0 55%,#16265E)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(160deg,#F6D365,#FDA085)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(210deg,#30CFD0,#330867)"></button>
+          <button class="ps-cell" style="--g:radial-gradient(circle at 25% 75%,#FFD3A5,#FF8D5A 40%,#B03A5B)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(135deg,#0F3443,#34E89E 60%,#D8F5A2)"></button>
+          <button class="ps-cell" style="--g:linear-gradient(155deg,#2B1055,#7597DE 70%,#E6EEFF)"></button>
+        </div>
+
+        <div class="ps-hair"></div>
+        <div class="ps-bottom"><button class="ps-del" id="delBtn" disabled>删除</button></div>
+
+        <div class="ps-empty" id="empty" hidden>还没有照片</div>
+
+        <!-- 选择模式提示条：进/退模式时短暂浮出，给个明确反馈 -->
+        <div class="ps-hint" id="hint"></div>
+      </div>
+
+      <div class="ps-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>语义 ≠ 几何</b>：网格只是排布，选择按<b>一维照片序列</b>走——锚点 <code>anchorIdx</code> ↔ 笔尖 <code>curIdx</code> 的整段 <code>[min,max]</code> 落选中/取消，斜拖跨行也照样「起点到终点全选」。</li>
+        <li><b>起笔定方向</b>：第一笔 <code>paintAt</code> 时才决定 <code>dir</code>（锚点已在选 = 这笔取消），<b>整笔不翻转</b>——回拖只靠区间裁决。</li>
+        <li><b>甩出区间自动撤销</b>：本笔碰过的格子记在 <code>strokeApplied</code> 里；回拖后不在 <code>[lo,hi]</code> 内的就地回滚。只碰本笔动过的，之前就选好的天然不受影响。</li>
+        <li><b>起涂门槛</b>：位移 &gt; <code>touchSlop</code> 才算涂抹（Android <code>ViewConfiguration.getScaledTouchSlop()</code>），并掐掉挂起的长按、禁止滚动抢手势。</li>
+        <li><b>选中态只改叠层</b>：压暗 30% + 内嵌 2px 描边（Prism <code>select_overlay</code>），不重排不重绘缩略图。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li><b>长按</b>（按住约半秒）任意一格 → 进选择模式并勾住它。</li>
+        <li>选择模式里<b>按住拖动</b>：从第 1 格斜着拖到第 8 格 → 中间整段全选，包括手指没压过的格子。</li>
+        <li>选中一整段后<b>往回拖</b> → 甩出区间的自己撤销；试着来回甩，看区间怎么裁决。</li>
+        <li>起笔落在<b>已选</b>图上再拖 = 这笔整段取消（方向由起笔那格决定）。</li>
+        <li>顶栏「选择」也能进模式（长按是 Prism 原生入口，这里补一个便于发现）；「取消」退出并清空。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>不做中途换向（列表那版在拐点翻方向、新段从拐点起算；这版锚点固定、整笔方向不翻）、不做贴边自动滚动（列表那版有 56px 带 / 14px 每 30ms 那套）、不做橡皮擦与套索、不做选中时整格重排。</li></ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

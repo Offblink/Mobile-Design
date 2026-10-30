@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>涂抹多选 · 列表 · mobile-design</title>
+<link rel="stylesheet" href="../../../shared/tokens.css">
+<link rel="stylesheet" href="../../../shared/frame.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-head">
+    <div class="tags"><span class="tag">blinvo-design</span><span class="tag alt">source: Offblink/Spore-Mobile · record.js 长按进多选 / paintTo / 边界自动滚动</span></div>
+    <h1>涂抹多选 · 列表（paint-select-list）</h1>
+    <p>一维列表上的涂抹多选，入口是<b>长按卡片</b>（500ms，越过 10px 就作废——那是滚动不是长按）：进模式后左边现出圆形单选框，<b>从单选框起笔拖动</b> = 选中「段起点 → 笔尖所在卡」之间全部。跟相册网格那版的差别在<b>折返</b>——中途换向会翻转方向、把新段起点挪到拐点；另有<b>贴边自动滚动</b>，笔尖靠近上/下缘列表自己滚起来，越贴越快，滚过的行继续跟着涂。</p>
+    <a class="home" href="../../../index.html">← 返回组件总览</a>
+  </div>
+  <div class="stage">
+    <div class="phone"><div class="screen">
+      <div class="ps-page">
+
+        <!-- 顶栏：常态 = ‹ + 标题 + （筛选开关，demo 省略）；多选 = ‹ + 「已选 N 项」 + 取消 -->
+        <div class="ps-top">
+          <button class="ps-icon" id="backBtn" type="button" aria-label="返回">‹</button>
+          <span class="ps-ptitle" id="ptitle">搜题记录</span>
+          <button class="ps-selx" id="selCancel" type="button">取消</button>
+        </div>
+
+        <div class="ps-list" id="list">
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">二次函数顶点式怎么配方</span><span class="ps-ts">10-11 09:41 · 数学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">氯化钠溶解度曲线判读</span><span class="ps-ts">10-11 09:28 · 化学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">光合作用与呼吸作用综合题</span><span class="ps-ts">10-11 09:14 · 生物</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">正交矩阵的行列式为什么是 ±1</span><span class="ps-ts">10-11 08:57 · 高数</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">虚拟语气 if 从句的省略</span><span class="ps-ts">10-11 08:40 · 英语</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">辛亥革命的历史意义简答</span><span class="ps-ts">10-10 22:16 · 历史</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">数列求和：错位相减法</span><span class="ps-ts">10-10 21:52 · 数学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">带电粒子在磁场中的运动半径</span><span class="ps-ts">10-10 21:30 · 物理</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">电解池阳极阴极产物判断</span><span class="ps-ts">10-10 20:58 · 化学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">辅助角公式推导过程</span><span class="ps-ts">10-10 20:31 · 数学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">科举制与九品中正制对比</span><span class="ps-ts">10-10 19:47 · 历史</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">概率分布的期望与方差</span><span class="ps-ts">10-10 19:12 · 数学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">古诗鉴赏：意象与情感对应</span><span class="ps-ts">10-10 18:36 · 语文</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">连接体问题的牛顿第二定律</span><span class="ps-ts">10-10 18:02 · 物理</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">化学平衡常数表达式书写</span><span class="ps-ts">10-10 17:25 · 化学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">导数单调性的分类讨论</span><span class="ps-ts">10-10 16:48 · 数学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">完形填空的上下文逻辑词</span><span class="ps-ts">10-10 16:11 · 英语</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">遗传分离比偏离的分析</span><span class="ps-ts">10-10 15:39 · 生物</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">向量共线与面积坐标法</span><span class="ps-ts">10-10 15:04 · 数学</span></span></div>
+          <div class="ps-row"><span class="ps-ck" aria-label="选择"></span><span class="ps-col"><span class="ps-t">洋流分布对气候的影响</span><span class="ps-ts">10-10 14:22 · 地理</span></span></div>
+
+          <div class="ps-empty" id="empty" hidden>暂无搜题记录</div>
+        </div>
+
+        <!-- 多选底栏：长按进多选后才浮出 -->
+        <footer class="ps-batch" id="batchbar" hidden>
+          <span class="ps-bcount" id="selCount">已选 0</span>
+          <button class="ps-bbtn" id="bFav" type="button" disabled>★ 收藏</button>
+          <button class="ps-bbtn" id="bMove" type="button" disabled>移入科目</button>
+          <button class="ps-bbtn ps-danger" id="bDel" type="button" disabled>删除</button>
+        </footer>
+
+        <div class="ps-hint" id="hint"></div>
+      </div>
+
+      <div class="ps-status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+    </div></div>
+    <aside class="notes">
+      <h2>组件要点</h2>
+      <ul>
+        <li><b>入口只有长按</b>：<code>HOLD_MS = 500</code> 起手，位移超过 <code>SLOP = 10px</code> 立即作废（那是滚动不是长按）。长按那笔的收尾 click 由 <code>held</code> 标志吃掉，否则刚勾上的又被翻回去。</li>
+        <li><b>模式换 chrome</b>：顶栏标题变「已选 N 项」、右侧筛选让位给「取消」、批量底栏浮出；左侧 <code>‹</code> 与取消走同一条出口。</li>
+        <li><b>起笔只认单选框</b>：<code>.ck</code> 平时 <code>display:none</code>，进模式才现身（模式门槛由显示本身管）；它带 <code>touch-action:none</code>，卡片其余区域的拖动仍留给滚动。</li>
+        <li><b>段区间重放</b>：<code>paintRange(to)</code> 把 <code>[min(seg,to), max(seg,to)]</code> 全设成本笔方向，幂等（<code>setRowSel</code> 状态没变就返回），来回甩不会翻来翻去。</li>
+        <li><b>折返换段</b>：新落点行号方向 <code>d</code> 与上一步 <code>dx</code> 相反 → <b>方向翻转 + <code>seg = 拐点</code></b>，新段从拐点起算。<code>dx</code> 初值 0，所以首步永不误判成折返。</li>
+        <li><b>贴边自动滚动</b>：<code>EDGE = 90</code> 的滚动带，<code>requestAnimationFrame</code> 每帧走 <code>3 → 16px</code>（<b>越贴边越快</b>）；笔尖不动也滚——靠 <code>lastPt</code> 持续 <code>rowUnder</code> 取行接着涂；出带、到顶/到底立刻停。</li>
+        <li><b>收笔吞 click</b>：<code>suppressClick</code> 吃掉涂抹收笔与长按收尾那两次 click；没动的轻点就地翻选这一格。收尾挂 <code>window</code> 上，指针划出列表也不会留下悬挂的定时器。</li>
+      </ul>
+      <h2>动手点</h2>
+      <ul>
+        <li><b>长按</b>任意一张卡片约半秒 → 进多选并勾住它（快速划动 = 滚动，不会误入）。</li>
+        <li>从任一<b>圆形单选框</b>按住往下拖 → 段起点到笔尖之间整段选中。</li>
+        <li>选中一段后<b>往回拖</b> → 在拐点折返：方向翻转，新段从拐点起算。</li>
+        <li>按住贴到列表<b>上缘或下缘</b> → 列表自己滚起来，越贴越快，滚出来的卡继续跟着入选；手指不用来回挪就能选完一整屏。</li>
+        <li>抬手前<b>没动</b> = 就地翻选这一格；多选模式里点卡片任意位置也翻选。</li>
+      </ul>
+      <h2>刻意没做</h2>
+      <ul class="never"><li>不做「批量选择」按钮（入口只有长按）、不做固定锚点的整笔区间（那是相册网格版的裁决方式）、不做套索与橡皮擦、选中只改这一格的 <code>.on</code> 不整列表重绘（滚动位置不能丢）。</li></ul>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
